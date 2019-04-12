@@ -21,9 +21,9 @@ Page({
     this.towerSwiper('swiperList');
     // 初始化towerSwiper 传已有的数组名即可
     wx.loadFontFace({
-      family: 'Bitstream Vera Serif Bold',
-      source: 'url("https://sungd.github.io/Pacifico.ttf")',
-      success: console.log
+      family: 'chi-font',
+      source: 'url("https://github.com/zyz9740/SEapp/blob/master/chi-font.TTF")',
+      success: console.log("success!")
     })
   },
   DotStyle(e) {
