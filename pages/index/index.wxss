@@ -1,0 +1,23 @@
+/**index.wxss**/
+page{
+  background-color: #F2F2F2;
+}
+.card {
+  background-color: #ffffff;
+  margin: 70rpx 60rpx;
+  padding:30rpx;
+  height:850rpx;
+  text-align: center;
+  box-shadow: 5px 5px 5px #888888;
+}
+.content{
+  margin: 20rpx 10rpx;
+  font-size: 32rpx;
+  text-align: left;
+}
+.from{
+  margin-top: 30rpx;
+  font-size:24rpx;
+  text-align:right;
+  font-style:italic;
+}

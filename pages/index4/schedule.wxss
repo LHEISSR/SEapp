@@ -1,0 +1,5 @@
+/* pages/index4/schedule.wxss */
+.intro {
+  margin: 30px;
+  text-align: center;
+}

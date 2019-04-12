@@ -1,0 +1,5 @@
+<!--pages/index4/schedule.wxml-->
+<view style="margin: 30px;text-align: center;">学习进度</view>
+<navigator class="content" hover-class="none" open-type="navigateBack">
+      <button>返回</button>
+</navigator>

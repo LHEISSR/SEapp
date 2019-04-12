@@ -1,0 +1,5 @@
+/**index2.wxss**/
+.intro {
+  margin: 30px;
+  text-align: center;
+}
