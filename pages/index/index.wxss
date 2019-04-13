@@ -1,4 +1,5 @@
 /**index.wxss**/
+@import "../../alifont.wxss";
 
 Page{
   background-color: #D9C9BA;
@@ -22,7 +23,7 @@ Page{
   font-size: 48rpx;
   writing-mode: vertical-rl;
   margin-top:50rpx;
-  font-family: "chi-font";
+  font-family: "";
 }
 
 .swiper-item-preview{

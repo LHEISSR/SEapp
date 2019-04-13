@@ -19,10 +19,10 @@ Page({
   },
   onLoad() {
     this.towerSwiper('swiperList');
-    // 初始化towerSwiper 传已有的数组名即可
+    //初始化towerSwiper 传已有的数组名即可
     wx.loadFontFace({
       family: 'chi-font',
-      source: 'url("https://github.com/zyz9740/SEapp/blob/master/chi-font.TTF")',
+      source: 'url("https://github.com/zyz9740/SEapp/raw/master/FZQKBYSJW--GB1-0.ttf")' ,
       success: console.log("success!")
     })
   },
