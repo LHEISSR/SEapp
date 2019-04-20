@@ -17,6 +17,10 @@ Page({
   onLoad: function (options) {
     //调取数据
     var cardCur = options.cardCur;
+    console.log("cardCur:"+cardCur);
+    this.setData({
+      cardCur: cardCur,
+    })
     var that = this;
     wx.getStorage({
       key: 'swiperList',
@@ -75,7 +79,7 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-    
+
   },
 
   /*
@@ -84,23 +88,30 @@ Page({
   clickFavor(e){
     var articleInfo = this.data.articleInfo;
     var cardCur = this.data.cardCur;
-    articleInfo.like = !articleInfo.like;
+    var isLike = !articleInfo.like
+    articleInfo.like = isLike;
     this.setData({
       articleInfo:articleInfo,
     })
     //更新本地缓存
-    var swiperList = [];
     wx.getStorage({
       key: 'swiperList',
       success(res) {
-        swiperList = res.data;
+        var swiperList = res.data;
+        console.log(cardCur);
+        console.log(articleInfo);
+        swiperList[cardCur] = articleInfo;
+        console.log(swiperList);
+        wx.setStorage({
+          key: 'swiperList',
+          data: swiperList,
+        })
       }
     })
-    console.log(swiperList);
-    swiperList[cardCur] = articleInfo;
-    wx.setStorage({
-      key: 'swiperList',
-      data: swiperList,
+    wx.showToast({
+      title: isLike ? "已收藏" : "已取消",
+      icon: 'success',
+      duration: 500
     })
   },
 })

@@ -63,7 +63,12 @@ Page({
     //     console.log(res.status)
     //   }
     // });
-    
+    try {
+      wx.clearStorageSync()
+      console.log("clear Storage");
+    } catch (e) {
+      // Do something when catch error
+    }
   },
 
 
@@ -135,14 +140,12 @@ Page({
             'content-type': 'application/json' // 默认值
           },
           success(res) {
-            console.log(res.data)
             that.setData({
               swiperList: res.data,
             })
           }
         })
         //储存数据
-        console.log(that.data.swiperList);
         wx.setStorage({
           key: 'swiperList',
           data: that.data.swiperList,
@@ -184,7 +187,8 @@ Page({
   clickFavor(e){
     var swiperList = this.data.swiperList;
     var cardCur = this.data.cardCur;
-    swiperList[cardCur].like = !swiperList[cardCur].like;
+    var isLike = !swiperList[cardCur].like;
+    swiperList[cardCur].like = isLike;
     this.setData({
       swiperList:swiperList,
     })
@@ -193,6 +197,12 @@ Page({
       key: 'swiperList',
       data: swiperList,
     })
+    wx.showToast({
+      title: isLike?"已收藏":"已取消",
+      icon: 'success',
+      duration: 500
+    })
+
   },
   clickRead(e){
     wx.navigateTo({
