@@ -1,5 +1,4 @@
 /**index.wxss**/
-@import "../../alifont.wxss";
 
 Page{
   background-color: #D9C9BA;
@@ -12,20 +11,71 @@ Page{
 .swiper-item{
   margin: 30rpx;
   background-color: white;
-  padding: 50rpx;
+  padding: 50rpx 50rpx 0 50rpx;
   display: flex !important;
   flex-direction: column;
   align-items: flex-end; 
 }
-
-.swiper-item-title{
+.swiper-item-top{
+  display: flex;
+  justify-content: space-between;
   height: 400rpx;
-  font-size: 48rpx;
-  writing-mode: vertical-rl;
-  margin-top:50rpx;
-  font-family: "";
+  top: 0;
+  width: 100%;
 }
 
+.swiper-item-calen{
+  left: 0;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.swiper-item-calen-date{
+  font-size: 64rpx;
+  height: 100rpx;
+  margin-right: 20rpx; 
+}
+
+.swiper-item-calen view{
+  display: flex;
+  flex-direction: column;
+  height: 100rpx;
+}
+
+.swiper-item-title{
+  font-size: 48rpx;
+  writing-mode: vertical-rl;
+  margin:50rpx 0;
+  /* font-family: "chi-font"; */  
+  
+}
+
+.swiper-item-title text{
+  margin-right: 15rpx;
+  font-size:30rpx;
+  display:flex;
+  flex-direction: column;
+  align-items:flex-end;
+}
+
+
 .swiper-item-preview{
+  height: 400rpx;
   font-size: 32rpx;
+  /* font-family: "chi-font"; */
+  overflow: hidden;
+}
+
+.swiper-item-operation{
+  bottom: 0;
+  padding: 20rpx 0;
+}
+
+.swiper-item-operation>text{
+  margin-right:30rpx;
+}
+
+.swiper-item-operation>.favor{
+  color:#D9C9BA;
+  font-size: 36rpx;
 }

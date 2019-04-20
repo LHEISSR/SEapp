@@ -1,6 +1,5 @@
 @import "colorui/main.wxss";
 @import "colorui/icon.wxss";
-@import "font.wxss";
 
 /**app.wxss**/
 .container {
