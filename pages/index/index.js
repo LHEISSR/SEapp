@@ -1,31 +1,72 @@
 // pages/index3/index3.js
 Page({
   data: {
-    cardCur: 0,
-    swiperList: [
+    swiperList:[
       {
-        title:"陈澄钧列传",
-        preview:"一次 touchmove 的响应需要经过 2 次的逻辑层和渲染层的通信以及一次渲染，通信的耗时比较大。此外 setData 渲染也会阻塞其它脚本执行，导致了整个用户交互的动画过程会有延迟。"
-      }, {
+        push_id:2019420,
+        date:"13",
+        weekday:"周六",
+        lunar:"三月初六",
         title: "陈澄钧列传",
-        preview: "一次 touchmove 的响应需要经过 2 次的逻辑层和渲染层的通信以及一次渲染，通信的耗时比较大。此外 setData 渲染也会阻塞其它脚本执行，导致了整个用户交互的动画过程会有延迟。"
-      }, {
+        dynasty:"宋",
+        author:"张云哲",
+        article: "一次 touchmove 的响应需要经过 2 次的逻辑层和渲染层的通信以及一次渲染，通信的耗时比较大。此外 setData 渲染也会阻塞其它脚本执行，导致了整个用户交互的动画过程会有延迟。一次 touchmove 的响应需要经过 2 次的逻辑层和渲染层的通信以及一次渲染，通信的耗时比较大。此外 setData 渲染也会阻塞其它脚本执行，导致了整个用户交互的动画过程会有延迟。一次 touchmove 的响应需要经过 2 次的逻辑层和渲染层的通信以及一次渲染，通信的耗时比较大。此外 setData 渲染也会阻塞其它脚本执行，导致了整个用户交互的动画过程会有延迟。一次 touchmove 的响应需要经过 2 次的逻辑层和渲染层的通信以及一次渲染，通信的耗时比较大。此外 setData 渲染也会阻塞其它脚本执行，导致了整个用户交互的动画过程会有延迟。一次 touchmove 的响应需要经过 2 次的逻辑层和渲染层的通信以及一次渲染，通信的耗时比较大。此外 setData 渲染也会阻塞其它脚本执行，导致了整个用户交互的动画过程会有延迟。",
+        content:"张云哲，宋代著名文学家、哲学家、历史学家",
+        like_count:187,
+        like:false,
+      },{
+        push_id: 2019419,
+        date: "12",
+        weekday: "周五",
+        lunar: "三月初五",
         title: "陈澄钧列传",
-        preview: "一次 touchmove 的响应需要经过 2 次的逻辑层和渲染层的通信以及一次渲染，通信的耗时比较大。此外 setData 渲染也会阻塞其它脚本执行，导致了整个用户交互的动画过程会有延迟。"
+        dynasty: "宋",
+        author: "张云哲",
+        article: "第二页 一次 touchmove 的响应需要经过 2 次的逻辑层和渲染层的通信以及一次渲染，通信的耗时比较大。此外 setData 渲染也会阻塞其它脚本执行，导致了整个用户交互的动画过程会有延迟。一次 touchmove 的响应需要经过 2 次的逻辑层和渲染层的通信以及一次渲染，通信的耗时比较大。此外 setData 渲染也会阻塞其它脚本执行，导致了整个用户交互的动画过程会有延迟。一次 touchmove 的响应需要经过 2 次的逻辑层和渲染层的通信以及一次渲染，通信的耗时比较大。此外 setData 渲染也会阻塞其它脚本执行，导致了整个用户交互的动画过程会有延迟。一次 touchmove 的响应需要经过 2 次的逻辑层和渲染层的通信以及一次渲染，通信的耗时比较大。此外 setData 渲染也会阻塞其它脚本执行，导致了整个用户交互的动画过程会有延迟。一次 touchmove 的响应需要经过 2 次的逻辑层和渲染层的通信以及一次渲染，通信的耗时比较大。此外 setData 渲染也会阻塞其它脚本执行，导致了整个用户交互的动画过程会有延迟。",
+        content: "张云哲，宋代著名文学家、哲学家、历史学家",
+        like_count: 134,
+        like: false,
       }, {
+        push_id: 2019418,
+        date: "11",
+        weekday: "周四",
+        lunar: "三月初四",
         title: "陈澄钧列传",
-        preview: "一次 touchmove 的响应需要经过 2 次的逻辑层和渲染层的通信以及一次渲染，通信的耗时比较大。此外 setData 渲染也会阻塞其它脚本执行，导致了整个用户交互的动画过程会有延迟。"
-      }]
+        dynasty: "宋",
+        author: "张云哲",
+        article: "第三页",
+        content: "张云哲，宋代著名文学家、哲学家、历史学家",
+        like_count: 187,
+        like: false,
+      },
+    ],
+    fontFamily: 'chi-font',
+    loaded: false,
+    cardCur: 0,
   },
   onLoad() {
     this.towerSwiper('swiperList');
     //初始化towerSwiper 传已有的数组名即可
-    wx.loadFontFace({
-      family: 'chi-font',
-      source: 'url("https://github.com/zyz9740/SEapp/raw/master/FZQKBYSJW--GB1-0.ttf")' ,
-      success: console.log("success!")
-    })
+    //const self = this
+    //加载字体（失败）
+    // wx.loadFontFace({
+    //   family: this.data.fontFamily,
+    //   source: 'url("https://github.com/zyz9740/SEapp/raw/master/FZQKBYSJW--GB1-0.ttf")',
+    //   success(res) {
+    //     console.log(res.status)
+    //     self.setData({ loaded: true })
+    //   },
+    //   fail: function (res) {
+    //     console.log(res.status)
+    //   },
+    //   complete: function (res) {
+    //     console.log(res.status)
+    //   }
+    // });
+    
   },
+
+
   DotStyle(e) {
     this.setData({
       DotStyle: e.detail.value
@@ -61,6 +102,54 @@ Page({
       direction: e.touches[0].pageX - this.data.towerStart > 0 ? 'right' : 'left'
     })
   },
+  onShow: function () {
+    if (typeof this.getTabBar === 'function' &&
+      this.getTabBar()) {
+      this.getTabBar().setData({
+        selected: 0
+      })
+    }
+
+    //读取储存更新
+    //向后端请求数据
+    var that = this;
+    wx.getStorage({
+      key: 'swiperList',
+      success(res) {    //如果在储存中
+        console.log("in storage");
+        wx.getStorage({
+          key: 'swiperList',
+          success(res) {
+            that.setData({
+              swiperList: res.data,
+            })
+          }
+        })
+      },
+      fail(res) {      //如果没有在储存中
+        console.log("not in storage");
+        wx.request({
+          url: 'test.php', // 仅为示例，并非真实的接口地址
+          method: 'GET',
+          header: {
+            'content-type': 'application/json' // 默认值
+          },
+          success(res) {
+            console.log(res.data)
+            that.setData({
+              swiperList: res.data,
+            })
+          }
+        })
+        //储存数据
+        console.log(that.data.swiperList);
+        wx.setStorage({
+          key: 'swiperList',
+          data: that.data.swiperList,
+        })
+      }
+    })
+  },
   // towerSwiper计算滚动
   towerEnd(e) {
     let direction = this.data.direction;
@@ -90,5 +179,24 @@ Page({
         swiperList: list
       })
     }
-  }
+  },
+  //自定义动作
+  clickFavor(e){
+    var swiperList = this.data.swiperList;
+    var cardCur = this.data.cardCur;
+    swiperList[cardCur].like = !swiperList[cardCur].like;
+    this.setData({
+      swiperList:swiperList,
+    })
+    //更新本地缓存
+    wx.setStorage({
+      key: 'swiperList',
+      data: swiperList,
+    })
+  },
+  clickRead(e){
+    wx.navigateTo({
+      url: './article?cardCur='+this.data.cardCur,
+    })
+  },
 })
