@@ -1,5 +1,16 @@
 <!--pages/index4/curve.wxml-->
 <view style="margin: 30px;text-align: center;">记忆曲线</view>
+
+<block>
+  <button wx:for="{{setting}}">
+    <view class="flex-wrp" style="flex-direction:row;">
+      <view class="flex-item bc_green">{{item.days}}</view>
+    </view>
+  </button>
+</block>
+
+这里之后甚至可以放一些学习曲线的图，以及对于学习曲线进行一些解释。
+
 <navigator class="content" hover-class="none" open-type="navigateBack">
       <button>返回</button>
 </navigator>
