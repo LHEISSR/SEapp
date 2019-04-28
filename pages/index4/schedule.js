@@ -5,7 +5,20 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    section: [
+      {
+        name: "七年级上册",
+        progress: 70,
+      },
+      {
+        name: "七年级下册",
+        progress: 30,
+      },
+      {
+        name: "八年级上册",
+        progress: 50
+      }
+    ]
   },
 
   /**

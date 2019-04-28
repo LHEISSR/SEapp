@@ -1,5 +1,31 @@
+
+
 <!--pages/index4/schedule.wxml-->
 <view style="margin: 30px;text-align: center;">学习进度</view>
+
+<block>
+  <!-- <view class='flex-wrp' style="flex-dirction: row;">
+    <view style="text-align: left; ">岳阳楼记</view>
+    <view style="text-align: right; ">范仲淹</view>
+  </view> -->
+  <!--
+  <view class="section">
+  <view class="flex-wrp" style="flex-direction:row;">
+    <view class="flex-item bc_green">岳阳楼记</view>
+    <view class="flex-item bc_red">范仲淹</view>
+  </view>
+  </view>
+  -->
+  <button wx:for="{{section}}">
+    <view class="flex-wrp" style="flex-direction:row;">
+      <view class="flex-item bc_green">{{item.name}}</view>
+    </view>
+    <progress percent='{{item.progress}}' color='#D9C9BA'></progress>
+  </button>
+</block>
+
+<!--
 <navigator class="content" hover-class="none" open-type="navigateBack">
       <button>返回</button>
 </navigator>
+-->

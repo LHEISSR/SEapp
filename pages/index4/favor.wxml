@@ -1,5 +1,37 @@
 <!--pages/index4/favor.wxml-->
 <view style="margin: 30px;text-align: center;">我的收藏</view>
+
+<!-- 点击对应的 button 会跳转到对应的页面 -->
+
+<block>
+  词汇学习
+  <button wx:for="{{learn}}">
+    <view class="flex-wrp" style="flex-direction:row;">
+      <view class="flex-item bc_green">{{item.name}} （出自 {{item.from_which}}）</view>
+    </view>
+  </button>
+</block>
+
+<block>
+  每日一句
+  <button wx:for="{{yiju}}">
+    <view class="flex-wrp" style="flex-direction:row;">
+      <view class="flex-item bc_green">{{item.name}}</view>
+    </view>
+  </button>
+</block>
+
+<block>
+  字典收藏
+  <button wx:for="{{vocab}}">
+    <view class="flex-wrp" style="flex-direction:row;">
+      <view class="flex-item bc_green">{{item.name}} "出自" {{item.from_which}}</view>
+    </view>
+  </button>
+</block>
+
+
+
 <navigator class="content" hover-class="none" open-type="navigateBack">
       <button>返回</button>
 </navigator>

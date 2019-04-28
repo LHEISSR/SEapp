@@ -1,22 +1,20 @@
-// pages/index4/curve.js
+// pages/index4/follow.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    setting: [
+    follower: [
       {
-        days: 1
-      },
+        id: 1,
+        name: "Jio"
+      }
+    ],
+    following: [
       {
-        days: 3
-      },
-      {
-        days: 5
-      },
-      {
-        days: 7
+        id: 3,
+        name: "辉神nb"
       }
     ]
   },
