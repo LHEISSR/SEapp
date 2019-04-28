@@ -50,5 +50,7 @@
     "navigationBarBackgroundColor": "#D9C9BA",
     "navigationBarTitleText": "一见",
     "navigationBarTextStyle": "black"
-  }
+
+  },
+  "sitemapLocation": "sitemap.json"
 }

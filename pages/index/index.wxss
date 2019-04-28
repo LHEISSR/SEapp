@@ -9,7 +9,7 @@ Page{
 }
 
 .swiper-item{
-  margin: 30rpx;
+  //margin: 10rpx;
   background-color: white;
   padding: 50rpx 50rpx 0 50rpx;
   display: flex !important;
