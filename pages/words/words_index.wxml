@@ -1,0 +1,14 @@
+<!--words_index.wxml-->
+<view class="intro">
+  
+ <wux-tabs defaultCurrent="tab1">
+    <wux-tab key="tab1" title="完成度"></wux-tab>
+    <wux-tab key="tab2" title="打卡日历"></wux-tab>
+  </wux-tabs>
+
+  <view class="circle">
+  <wux-circle percent="50" sAngle = "270" size = "240" strokeWidth="15" color="#D9C9BA">{{ 50 + '%' }}</wux-circle>
+  </view>
+
+  <button role="button" bindtap="clickStudy">开始学习</button>
+</view>

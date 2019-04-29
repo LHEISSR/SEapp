@@ -1,0 +1,5 @@
+/**words_index.wxss**/
+.intro {
+  margin: 0px;
+  text-align: center;
+}
