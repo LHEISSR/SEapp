@@ -1,5 +1,18 @@
 /**words_index.wxss**/
-.intro {
+.word_index_container {
+  position: relative;
   margin: 0px;
+  align-items:center;
+}
+
+
+
+.word_index_status{
   text-align: center;
+  margin: 20px;
+}
+
+.word_start_study{
+  width: 80%;
+  align-items:center;
 }
