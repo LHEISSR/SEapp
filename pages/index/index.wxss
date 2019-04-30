@@ -3,13 +3,13 @@
 Page{
   background-color: #D9C9BA;
 }
+/* search-bar */
 
 .card-swiper{
   height: 1000rpx;
 }
 
 .swiper-item{
-  //margin: 10rpx;
   background-color: white;
   padding: 50rpx 50rpx 0 50rpx;
   display: flex !important;

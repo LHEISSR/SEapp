@@ -141,7 +141,7 @@ Page({
           },
           success(res) {
             that.setData({
-              swiperList: res.data,
+              swiperList: res.data.swiperList,
             })
           }
         })
@@ -207,6 +207,11 @@ Page({
   clickRead(e){
     wx.navigateTo({
       url: './article?cardCur='+this.data.cardCur,
+    })
+  },
+  onSearchBarFocus(e) {
+    wx.navigateTo({
+      url: './search'
     })
   },
 })

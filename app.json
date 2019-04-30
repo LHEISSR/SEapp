@@ -2,6 +2,8 @@
   "pages": [
     "pages/index/index",
     "pages/index/article",
+    "pages/index/search",
+    "pages/index/searchResult",
     "pages/index2/index2",
     "pages/index3/index3",
     "pages/index4/index4",

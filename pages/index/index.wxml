@@ -2,12 +2,16 @@
 <view class="cu-bar search" style="top:{{CustomBar}}px;">
   <view class="search-form round">
     <text class="icon-search"></text>
-    <input type="text" placeholder="输入搜索的关键词" confirm-type="search"></input>
+    <input type="text" placeholder="输入搜索的关键词" confirm-type="search" bindfocus='onSearchBarFocus'></input>
   </view>
+  <!-- <view class="search-button">
+      <button class="cu-btn bg-brown shadow-blur round">搜索</button>
+  </view> -->
+</view>
+
   <!-- <view class="action">
     <button class="cu-btn bg-gradual-green shadow-blur round">搜索</button>
   </view> -->
-</view>
 <swiper class="card-swiper {{DotStyle?'square-dot':'round-dot'}}"  interval="5000" duration="500" bindchange="cardSwiper">
   <swiper-item wx:for="{{swiperList}}" wx:key class="{{cardCur==index?'cur':''}}">
     <view class="swiper-item">
