@@ -22,18 +22,25 @@
       <text class="text-grey">我的收藏</text>
     </navigator>
   </view>
-  <view class="cu-item arrow">
+  <!-- <view class="cu-item arrow">
     <navigator class="content" hover-class="none" url="follow" open-type="navigate">
       <text class="icon-friendfill text-orange"></text>
       <text class="text-grey">我的关注</text>
     </navigator>
-  </view>
-  <view class="cu-item arrow">  <!-- 这里设置成 “按钮的形式” -->
-    <navigator class="content" hover-class="none" url="about" open-type="navigate">
-      <text class="icon-discoverfill text-orange"></text>
+  </view> -->
+  
+  <!-- 这里设置成 “按钮的形式” -->
+  <view class="cu-item margin-top bg-white margin-bottom">
+    <view class="action content">
+      <text class="icon-timefill text-orange"></text>
       <text class="text-grey">夜间模式</text>
-    </navigator>
+    </view>
+    <view>
+      <!-- <text class="text-df margin-right-sm"></text> -->
+      <switch color="#403124"></switch>
+    </view>
   </view>
+
   <view class="cu-item arrow">
     <navigator class="content" hover-class="none" url="about" open-type="navigate">
       <text class="icon-discoverfill text-orange"></text>

@@ -12,7 +12,8 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    // 这里一般都会有 setData 函数用于更新界面，或者说用于更新 data 数据
+    
   },
 
   /**

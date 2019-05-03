@@ -1,22 +1,14 @@
 
-
 <!--pages/index4/schedule.wxml-->
-<view style="margin: 30px;text-align: center;">学习进度</view>
+
+<!-- 这里先用一个折线图给出最近的学习情况记录，下面是一些卡片 -->
+
+<canvas canvas-id='lineCanvas'></canvas>
+
+<view class='margin-bottom'></view>
 
 <block>
-  <!-- <view class='flex-wrp' style="flex-dirction: row;">
-    <view style="text-align: left; ">岳阳楼记</view>
-    <view style="text-align: right; ">范仲淹</view>
-  </view> -->
-  <!--
-  <view class="section">
-  <view class="flex-wrp" style="flex-direction:row;">
-    <view class="flex-item bc_green">岳阳楼记</view>
-    <view class="flex-item bc_red">范仲淹</view>
-  </view>
-  </view>
-  -->
-  <button wx:for="{{section}}">
+  <button wx:for="{{section}}" class='margin'>
     <view class="flex-wrp" style="flex-direction:row;">
       <view class="flex-item bc_green">{{item.name}}</view>
     </view>
@@ -29,3 +21,15 @@
       <button>返回</button>
 </navigator>
 -->
+
+<scroll-view scroll-y class="scrollPage">
+  <!-- <image src='/images/BasicsBg.png' mode='widthFix' class='png' style='width:100%;height:486rpx'></image> -->
+  <view class='nav-list'>
+    <navigator open-type="navigate" hover-class='none' wx:for="{{section}}" class="nav-li">
+      <view class="nav-title">{{item.name}}</view>
+      <view class="nav-name">{{item.progress}}</view>
+      <text class='cuIcon-{{item.icon}}'></text>
+    </navigator>
+  </view>
+  <view class='cu-tabbar-height'></view>
+</scroll-view>

@@ -1,5 +1,8 @@
 <!--pages/index4/about.wxml-->
 <view style="margin: 30px;text-align: center;">关于我们</view>
+
+<!-- 这里可以尝试使用时间轴 -->
+
 <navigator class="content" hover-class="none" open-type="navigateBack">
       <button>返回</button>
 </navigator>

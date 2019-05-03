@@ -1,4 +1,8 @@
 // pages/index4/schedule.js
+
+// For the charts
+var wxCharts = require('./wxcharts.js');
+
 Page({
 
   /**
@@ -18,6 +22,12 @@ Page({
         name: "八年级上册",
         progress: 50
       }
+    ],
+    // 这里记录了每天学习的词汇数量
+    numbers: [
+      5, 
+      4, 
+      6,
     ]
   },
 
@@ -25,7 +35,32 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    // plot_chart(numbers);
+    new wxCharts({
+      canvasId: 'lineCanvas',
+      type: 'line',
+      categories: ['2012', '2013', '2014', '2015', '2016', '2017'],
+      series: [{
+        name: '成交量1',
+        data: [0.15, 0.2, 0.45, 0.37, 0.4, 0.8],
+        format: function (val) {
+          return val.toFixed(2) + '万';
+        }
+      },
+      ],
+      yAxis: {
+        title: '成交金额 (万元)',
+        format: function (val) {
+          return val.toFixed(2);
+        },
+        min: 0
+      },
+      width: 320,
+      height: 200,
+      extra: {
+        lineStyle: 'curve'
+      }
+    });
   },
 
   /**

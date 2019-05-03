@@ -12,3 +12,7 @@
     margin: 8px;
     position: relative;
 }
+
+page{
+  padding-top: 90rpx;
+}
