@@ -9,7 +9,7 @@ Component({
       selectedIconPath: "/image/note.png",
       text: "一句"
     }, {
-      pagePath: "/pages/index2/index2",
+      pagePath: "/pages/words/words_index",
       iconPath: "/image/book_black.png",
       selectedIconPath: "/image/book.png",
       text: "背词"

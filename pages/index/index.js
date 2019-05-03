@@ -121,7 +121,7 @@ Page({
     wx.getStorage({
       key: 'swiperList',
       success(res) {    //如果在储存中
-        console.log("in storage");
+        //console.log("in storage");
         wx.getStorage({
           key: 'swiperList',
           success(res) {

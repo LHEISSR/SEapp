@@ -2,9 +2,14 @@
   "pages": [
     "pages/index/index",
     "pages/index/article",
+<<<<<<< HEAD
     "pages/index/search",
     "pages/index/searchResult",
     "pages/index2/index2",
+=======
+    "pages/words/words_index",
+    "pages/words/words_study/words_study",
+>>>>>>> words
     "pages/index3/index3",
     "pages/index4/index4",
     "pages/index4/schedule",
@@ -28,7 +33,7 @@
         "text": "一句"
       },
       {
-        "pagePath": "pages/index2/index2",
+        "pagePath": "pages/words/words_index",
         "iconPath": "image/book_black.png",
         "selectedIconPath": "image/book.png",
         "text": "背词"
@@ -52,7 +57,10 @@
     "navigationBarBackgroundColor": "#D9C9BA",
     "navigationBarTitleText": "一见",
     "navigationBarTextStyle": "black"
+<<<<<<< HEAD
 
+=======
+>>>>>>> words
   },
   "sitemapLocation": "sitemap.json"
 }
