@@ -27,5 +27,6 @@ function last_days(n) {
 
 
 module.exports = {
-  formatDate: formatDate
+  formatDate: formatDate,
+  last_days: last_days
 }

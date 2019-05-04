@@ -13,7 +13,8 @@
     "pages/index4/favor",
     "pages/index4/about",
     "pages/logs/logs",
-    "pages/index4/follow"
+    "pages/index4/follow",
+    "pages/index4/settings"
   ],
   "tabBar": {
     "custom": true,

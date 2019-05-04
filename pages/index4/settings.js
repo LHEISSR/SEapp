@@ -1,21 +1,30 @@
-// pages/index4/curve.js
+// pages/index4/settings.js
+
+// 请用 picker[index], picker[indexOld] 来获取用户设置
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    setting: [
-      {
-        days: 3
-      },
-      {
-        days: 5
-      },
-      {
-        days: 7
-      }
-    ]
+    index: 3,
+    indexOld: 2,
+    picker: ['5', '10', '15', '20', '25', '30', '35', '40', '45', '50'],
+  },
+
+  PickerChange(e) {
+    console.log(e);
+    this.setData({
+      index: e.detail.value
+    })
+  },
+
+  PickerChangeOld(e) {
+    console.log(e);
+    this.setData({
+      indexOld: e.detail.value
+    })
   },
 
   /**

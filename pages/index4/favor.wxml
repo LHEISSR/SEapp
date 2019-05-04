@@ -1,27 +1,56 @@
 <!--pages/index4/favor.wxml-->
-<view style="margin: 30px;text-align: center;">我的收藏</view>
+<cu-custom bgColor="bg-gradual-blue" isBack="{{true}}"><view slot="backText">返回</view><view slot="content">我的收藏</view></cu-custom>
+<scroll-view scroll-x class="bg-white nav text-center fixed" style="top:{{CustomBar}}px">
+  <view class="cu-item {{index==TabCur?'text-brown cur':''}}" wx:for="{{tabNav}}" wx:key bindtap='tabSelect' data-id="{{index}}">
+    {{tabNav[index]}}
+  </view>
+</scroll-view>
 
-<!-- 点击对应的 button 会跳转到对应的页面 -->
+<text class='margin-top'></text>
 
-<block>
-  词汇学习
-  <button wx:for="{{learn}}">
+<block wx:if="{{TabCur==0}}">
+  <!-- <button wx:for="{{learn}}">
     <view class="flex-wrp" style="flex-direction:row;">
       <view class="flex-item bc_green">{{item.name}} （出自 {{item.from_which}}）</view>
     </view>
-  </button>
+  </button> -->
+  <block wx:for="{{yijuList}}">
+    <navigator open-type="navigate" hover-class='navigator-hover' url="/pages/index/article?cardCur=0">
+      <view class="cu-bar bg-white solid-bottom margin-top">
+        <view class="action">
+          <text class="cuIcon-title left">{{item.title}}</text>
+          <text text-align='right'>【{{item.dynasty}}】{{item.author}}</text>
+        </view>
+      </view>
+      <view class="padding bg-white">
+        <view class="flex flex-wrap">
+          <view class="swiper-item-preview">{{item.article}}</view>
+        </view>
+      </view>
+    </navigator>
+  </block>
 </block>
 
-<block>
-  每日一句
-  <button wx:for="{{yiju}}">
-    <view class="flex-wrp" style="flex-direction:row;">
-      <view class="flex-item bc_green">{{item.name}}</view>
-    </view>
-  </button>
+<block wx:if="{{TabCur==1}}">
+  <block wx:for="{{learn}}">
+    <navigator open-type="navigate" hover-class='navigator-hover' url="/pages/index/article?cardCur=0">
+      <view class="cu-bar bg-white solid-bottom margin-top">
+        <view class="action">
+          <text class="cuIcon-title left">{{item.name}} \n</text>
+          <view class="swiper-item-preview">（《{{item.from_which}}》）</view>
+          <!-- <text text-align='right'>{{item.from_which}}</text> -->
+        </view>
+      </view>
+      <!-- <view class="padding bg-white">
+        <view class="flex flex-wrap">
+          <view class="swiper-item-preview">出自《{{item.from_which}}》</view>
+        </view>
+      </view> -->
+    </navigator>
+  </block>
 </block>
 
-<block>
+<block wx:if="{{TabCur==2}}">
   字典收藏
   <button wx:for="{{vocab}}">
     <view class="flex-wrp" style="flex-direction:row;">
@@ -29,9 +58,3 @@
     </view>
   </button>
 </block>
-
-
-
-<navigator class="content" hover-class="none" open-type="navigateBack">
-      <button>返回</button>
-</navigator>
