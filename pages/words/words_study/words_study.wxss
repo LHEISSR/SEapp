@@ -1,4 +1,37 @@
- .page {
-  margin: 10px;
+.page {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; 
   text-align: center;
+}
+
+
+.add_btn{
+  width: 100%;
+  bottom:  8%;
+  position: fixed;
+}
+
+.btn1{
+  width: 80%;
+  margin-top: 20rpx;
+  background-color: #D9C9BA;
+  color: white;
+  border-radius: 98rpx
+}
+
+.btn1::after {
+  border-radius: 98rpx;
+}
+
+.btn2{
+  width: 80%;
+  margin-top: 20rpx;
+  background-color: #909090;
+  color: white;
+  border-radius: 98rpx
+}
+
+.btn2::after {
+  border-radius: 98rpx;
 }
