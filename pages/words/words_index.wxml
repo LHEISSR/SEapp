@@ -7,15 +7,32 @@
       <wux-tab key="tab2" title="打卡日历"></wux-tab>
     </wux-tabs>
   </view>
-  
+  <wux-white-space />
+  <wux-white-space />
+
   <view class="word_index_circle">
-    <wux-white-space />
-    <wux-white-space />
     <wux-circle percent="{{precent}}" sAngle = "270" size="{{winWidth * 0.8}}" strokeWidth="{{winWidth * 25/375}}" color="#D9C9BA" backgroundColor="#e5e5e5">
     {{ precent + '%'}} 
     </wux-circle>
   </view>
 
+  <view class="word_index_task">
+    <view class='status'>
+      <wux-icon type='ios-radio-button-on' color="#ffffff" size="20"/> 
+      <text>200</text>
+      <text>学习中词汇</text>
+    </view>
+    <view class='status'>
+      <wux-icon type='ios-checkmark-circle' color="#ffffff" size="20"/>
+      <text>200</text>
+      <text>已学习词汇</text>
+    </view>
+    <view class='status'>
+      <wux-icon type='ios-close-circle' color="#ffffff" size="20"/>
+      <text>200</text> 
+      <text>未学习词汇</text>
+    </view>
+  </view>
 
   <view class="add_start_btn">
     <button class="word_start_study" role="button" bindtap="clickStudy">开始学习</button>

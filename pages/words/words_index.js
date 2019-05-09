@@ -7,7 +7,8 @@ Page({
   data: {
     precent: 23,
     winWidth: 0,
-    winHeigth: 0
+    winHeigth: 0,
+    
   },
 
   /**

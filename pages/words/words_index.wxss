@@ -19,6 +19,21 @@
   top: 10%;
 }
 
+.word_index_task{
+  text-align:center;
+  align-items:center;
+  position: fixed;
+  width: 80%;
+  bottom: 28%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+.status{
+  display: flex;
+  flex-direction: column;
+  font-size: 18rpx;
+}
 .word_index_start_and_status{
   
   text-align:center;
