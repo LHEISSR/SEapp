@@ -67,5 +67,38 @@ Page({
    */
   onShareAppMessage: function () {
 
-  }
+  },
+
+  connectLocal(){
+    wx.request({
+      url: 'http://localhost:8000/server/message/',
+      method: 'GET',
+      header: {
+        'content-type': 'application/json'
+      },
+      success: function (res) {
+        console.log(res.data)
+        wx.showModal({
+          title: '提示',
+          content: res.data,
+        })
+      },
+      fail: function (res) {
+        wx.showModal({
+          title: '提示',
+          content: res.data,
+        })
+      }
+    })
+  },
+  testLogin(){
+    wx.openSetting({
+      success(res) {
+        console.log(res.authSetting)
+      }
+    })
+  },
+  bindGetUserInfo(e) {
+    console.log(e.detail.userInfo)
+  },
 })

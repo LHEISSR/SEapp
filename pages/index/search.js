@@ -7,7 +7,7 @@ Page({
   data: {
     inputText:"",
     searchHistoryList: [],
-    searchHintList: ["联想1", "联想2", "联想3", "联想4",]
+    searchHintList: ["爱", "联想2", "联想3", "联想4",]
   },
 
   /**
@@ -110,9 +110,30 @@ Page({
   },
   //点击搜索按钮
   onSearchButtonTap(e){
-    console.log(this.data.inputText);
+    if(this.data.inputText.length != 0){
+      // var newHistoryList = this.data.searchHistoryList;
+      // newHistoryList.push(this.data.inputText);    //日后再改
+      // this.setData({
+      //   searchHistoryList: newHistoryList,
+      //   inputText: "",
+      // })
+      // wx.setStorage({
+      //   key: 'searchHistoryList',
+      //   data: newHistoryList,
+      // })
+    }else{
+      wx.showToast({
+        title: "请点击下方查词结果",
+        icon: 'none',
+        duration: 1000
+      })
+    }
+  },
+  //点击联想的目录
+  onPressHint(e){
+    let word = this.data.searchHintList[e.currentTarget.dataset.index];
     var newHistoryList = this.data.searchHistoryList;
-    newHistoryList.push(this.data.inputText);    //日后再改
+    newHistoryList.push(word);    //日后再改
     this.setData({
       searchHistoryList: newHistoryList,
       inputText: "",
@@ -122,7 +143,14 @@ Page({
       data: newHistoryList,
     })
     wx.navigateTo({
-      url: './searchResult'
+      url: './searchResult?word='+word
+    })
+  },
+  //点击历史记录
+  onPressHistory(e) {
+    let word = this.data.searchHistoryList[e.currentTarget.dataset.index];
+    wx.navigateTo({
+      url: './searchResult?word=' + word
     })
   },
 })

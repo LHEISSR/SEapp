@@ -10,19 +10,21 @@
   </view>
 </view>
 <view class='search-bottom'>
+  <!-- 联想数据 -->
   <view class="cu-list menu search-hint" wx:if="{{inputText.length > 0}}">
-    <view class="cu-item" wx:for="{{searchHintList}}" wx:key>
+    <view class="cu-item" wx:for="{{searchHintList}}" wx:key bindtap="onPressHint" data-index="{{index}}">
       <view class="content">
         <text class="text-black">{{item}}</text>
       </view>
     </view>
   </view>
+  <!-- 历史数据 -->
   <view class="cu-list menu search-history" wx:else="{{inputText.length == 0}}">
     <view class="cu-item history-list" wx:for="{{searchHistoryList}}" wx:key>
-      <view class="content">
+      <view class="content" bindtap="onPressHistory" data-index="{{index}}">
         <text class="text-black">{{item}}</text>
-        <text id="{{index}}"class="icon-close text-grey" bindtap="onDeleteTap"></text>
       </view>
+      <text id="{{index}}"class="icon-close text-grey" bindtap="onDeleteTap"></text>
     </view>
     <view class='cu-item history-bottom' wx:if="{{searchHistoryList.length > 0}}">
       <view class='content' bindtap='onDeleteAllTap'>
@@ -35,7 +37,6 @@
         <text class='icon-sort text-grey history-icon'></text>
         <text>暂无历史数据</text>
       </view>
-    </view>
-    
+    </view> 
   </view>
 </view>
