@@ -1,16 +1,19 @@
 <view class="page">
-    
-  <wux-white-space />
-  <wux-progress activeColor="#D9C9BA" background-color="#f3f3f3" percent="50" />
-  <wux-white-space />
   
-  <wux-card full="{{true}}" bordered title="No.x">
-      <view slot="body">床前明月光</view>
-      <view slot="body">-----------</view>
-      <view slot="body">山有小口，仿佛若有光</view>
-  </wux-card>
+  <view>
+    <wux-white-space />
+    <text>今日词汇 1/20</text>
+    <text></text>  
+    <wux-white-space />
+    <wux-progress activeColor="#D9C9BA" background-color="#707070" shape="square" percent="50" />
+    <wux-white-space />  
+  </view>
+  
 
-  <wux-button full>我认识</wux-button>
-  <wux-button full>不认识</wux-button>
-
+  <view class="add_btn">
+     <button class="btn1" >我认识</button>
+     <wux-white-space />  
+     <button class="btn2" >不认识</button>
+  </view>
+  
 </view>
