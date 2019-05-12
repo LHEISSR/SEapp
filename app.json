@@ -52,7 +52,7 @@
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#D9C9BA",
-    "navigationBarTitleText": "一见",
+    "navigationBarTitleText": "知多少",
     "navigationBarTextStyle": "black"
   },
   "sitemapLocation": "sitemap.json"
