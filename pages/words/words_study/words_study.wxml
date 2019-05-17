@@ -32,7 +32,7 @@
      <button wx:if="{{word_pageStatus<=1}}" class="btn1" role="button" bindtap="_Know"> 我认识</button>
      <wux-white-space />  
 
-     <button wx:if="{{word_pageStatus<=1}}" class="btn2" role="button" bindtap="_UnKnow" >不认识</button>
+     <button wx:if="{{word_pageStatus<=1}}" class="btn2" role="button" bindtap="_UnKnow" >{{(word_pageStatus == 0)?"提示一下":"不认识"}}</button>
 
      <button wx:if="{{word_pageStatus==2}}" class="btn3" role="button" bindtap="_Next" >下一个</button>
   </view>
