@@ -47,6 +47,17 @@ App({
   },
   globalData: {
     userInfo: null,
-    word_book: 234
+    word_book: 234,
+
+    /*
+    这些东西需要
+    */
+    me: {
+      setting: {
+        index: 3,
+        indexOld: 2,
+        picker: ['5', '10', '15', '20', '25', '30', '35', '40', '45', '50'],
+      }
+    }
   }
 })

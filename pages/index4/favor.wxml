@@ -1,22 +1,21 @@
 <!--pages/index4/favor.wxml-->
-<cu-custom bgColor="bg-gradual-blue" isBack="{{true}}"><view slot="backText">返回</view><view slot="content">我的收藏</view></cu-custom>
 
-<view class="class_first" bindtouchstart="touchStart" bindtouchend="touchEnd">
+<view class="whole swiper-content {{TabCur==0? 'content-active' : ''}}" bindtouchstart="touchStart" bindtouchend="touchEnd" >
 
-  <scroll-view scroll-x class="bg-white nav text-center fixed" style="top:{{CustomBar}}px">
-    <view class="cu-item {{index==TabCur?'text-brown cur':''}}" wx:for="{{tabNav}}" wx:key bindtap='tabSelect' data-id="{{index}}">
+<scroll-view scroll-x class="bg-white nav">
+  <view class="flex text-center">
+    <view class="cu-item flex-sub {{index==TabCur?'text-brown cur':''}}" wx:for="{{3}}" wx:key bindtap="tabSelect" data-id="{{index}}">
       {{tabNav[index]}}
     </view>
-  </scroll-view>
+  </view>
+</scroll-view>
 
   <text class='margin-top'></text>
 
+  <!-- 
+      还是从后端请求，后端需要先在数据库上投影
+   -->
   <block wx:if="{{TabCur==0}}">
-    <!-- <button wx:for="{{learn}}">
-      <view class="flex-wrp" style="flex-direction:row;">
-        <view class="flex-item bc_green">{{item.name}} （出自 {{item.from_which}}）</view>
-      </view>
-    </button> -->
     <block wx:for="{{yijuList}}">
       <navigator open-type="navigate" hover-class='navigator-hover' url="/pages/index/article?cardCur=0">
         <view class="cu-bar bg-white solid-bottom margin-top">

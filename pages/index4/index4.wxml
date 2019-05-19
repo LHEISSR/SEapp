@@ -19,7 +19,7 @@
   <view class="cu-item arrow">
     <navigator class="content" hover-class="none" url="curve" open-type="navigate">
       <text class="icon-fork text-orange"></text>
-      <text class="text-grey">记忆曲线</text>
+      <text class="text-grey">我的排名</text>
     </navigator>
   </view>
   <view class="cu-item arrow">

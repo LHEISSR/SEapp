@@ -5,6 +5,8 @@ var touchDot = 0;//触摸时的原点
 var interval = "";
 var flag_hd = true;
 
+var startX, startY;
+
 Page({
 
   /**
@@ -13,6 +15,10 @@ Page({
   data: {
     tabNav: ['一句', '背词', '字典'],
     TabCur: 0,
+    touch: {
+      x: undefined,
+      y: undefined,
+    },
     yiju: [
       {
         id: 1,
@@ -65,7 +71,11 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    var that = this
+    var that = this.data;
+    var res = wx.getSystemInfoSync();
+    this.setData({
+      'screenHeight': res.screenHeight,
+    })
   },
 
   /**
@@ -85,38 +95,53 @@ Page({
   },
 
   // 触摸开始事件
-  touchStart: function (e) {
-    touchDot = e.touches[0].pageX; // 获取触摸时的原点
-    // 使用js计时器记录时间    
-    interval = setInterval(function () {
-      time++;
-    }, 100);
+  // touchStart: function (e) {
+  //   touchDot = e.touches[0].pageX; // 获取触摸时的原点
+  //   // 使用js计时器记录时间    
+  //   interval = setInterval(function () {
+  //     time++;
+  //   }, 100);
+  // },
+
+  touchStart(e) {
+    // console.log(e)
+    this.setData({
+      "touch.x": e.changedTouches[0].clientX,
+      "touch.y": e.changedTouches[0].clientY
+    });
+    // startX = e.changedTouches[0].clientX;
+    // startY = e.changedTouches[0].clientY;
   },
+
   // 触摸结束事件
-  touchEnd: function (e) {
-    var touchMove = e.changedTouches[0].pageX;
-    // 向左滑动   
-    if (touchMove - touchDot <= -40 && time < 10 && flag_hd == true) {
-      flag_hd = false;
-      this.TabCur = this.TabCur > 0 ? this.TabCur - 1 : 0;
-      //执行切换页面的方法
-      // console.log("向右滑动");
-      // wx.navigateTo({
-      //   url: '../right/right'
-      // })
+  touchEnd(e) {
+    const pageStartIndex = 0;
+    const pageEndIndex = 2;
+
+    console.log(this.TabCur);
+    startX = this.data.touch.x;
+    startY = this.data.touch.y;
+    var endX = e.changedTouches[0].clientX;
+    var endY = e.changedTouches[0].clientY;
+
+    if (Math.abs(endY - startY) < 50) {
+      if (endX - startX > 50) {      //左滑
+        console.log('left');
+        if (this.data.TabCur > pageStartIndex) {
+          // this.data.TabCur = this.data.TabCur - 1;
+          this.setData({
+            'TabCur': this.data.TabCur - 1,
+          });
+        }
+      } else if (endX - startX < -50) {   //右滑
+        console.log('right');
+        if (this.data.TabCur < pageEndIndex) {
+          this.setData({
+            'TabCur': this.data.TabCur + 1,
+          })
+        }
+      }
     }
-    // 向右滑动   
-    if (touchMove - touchDot >= 40 && time < 10 && flag_hd == true) {
-      flag_hd = false;
-      this.TabCur = this.TabCur < 2 ? this.TabCur + 1 : 2;
-      //执行切换页面的方法
-      // console.log("向左滑动");
-      // wx.navigateTo({
-      //   url: '../left/left'
-      // })
-    }
-    clearInterval(interval); // 清除setInterval
-    time = 0;
   },
 
   /**
