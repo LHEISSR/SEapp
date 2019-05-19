@@ -2,18 +2,39 @@
   
   <view>
     <wux-white-space />
-    <text>今日词汇 1/20</text>
+    <text>今日词汇 {{word_todayRemembered}}/{{word_list.length}}</text>
     <text></text>  
     <wux-white-space />
-    <wux-progress activeColor="#D9C9BA" background-color="#707070" shape="square" percent="50" />
+    <wux-progress activeColor="#D9C9BA" background-color="#707070" shape="square" percent="{{word_todayRemembered/word_list.length * 100}}" />
     <wux-white-space />  
   </view>
   
+  <view class="word_page"> 
+    <view wx:if="{{word_pageStatus<=1}}" class="word_page0">
+      <text>
+        {{word_list[word_now].word_Sentence}}
+      </text>
+    </view>
 
-  <view class="add_btn">
-     <button class="btn1" >我认识</button>
+    <view wx:if="{{word_pageStatus==1}}" class="word_page1"> 
+      <text>
+        {{word_list[word_now].word_SimilarSentence}}
+      </text>
+    </view>
+    
+    <view wx:if="{{word_pageStatus==2}}" class="word_page2">
+      
+    </view>
+  </view>
+
+
+  <view  class="add_btn">
+     <button wx:if="{{word_pageStatus<=1}}" class="btn1" role="button" bindtap="_Know"> 我认识</button>
      <wux-white-space />  
-     <button class="btn2" >不认识</button>
+
+     <button wx:if="{{word_pageStatus<=1}}" class="btn2" role="button" bindtap="_UnKnow" >{{(word_pageStatus == 0)?"提示一下":"不认识"}}</button>
+
+     <button wx:if="{{word_pageStatus==2}}" class="btn3" role="button" bindtap="_Next" >下一个</button>
   </view>
   
 </view>

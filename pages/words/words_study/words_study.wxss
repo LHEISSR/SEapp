@@ -5,6 +5,28 @@
   text-align: center;
 }
 
+.word_page{
+
+
+}
+.word_page0
+{ 
+  width: 100%;
+  top: 20%;
+  position: fixed;
+  font-size: 60rpx;
+}
+
+.word_page1{
+  width: 100%;
+  top: 40%;
+  position: fixed;
+}
+
+.word_page2{
+
+
+}
 
 .add_btn{
   width: 100%;
@@ -33,5 +55,17 @@
 }
 
 .btn2::after {
+  border-radius: 98rpx;
+}
+
+.btn3{
+  width: 80%;
+  margin-top: 20rpx;
+  background-color: #D9C9BA;
+  color: white;
+  border-radius: 98rpx
+}
+
+.btn3::after {
   border-radius: 98rpx;
 }
