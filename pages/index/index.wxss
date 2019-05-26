@@ -2,11 +2,24 @@
 
 Page{
   background-color: #D9C9BA;
+  height: 100%;
 }
 /* search-bar */
+.container-yiju{
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding-bottom: 120rpx;
+}
+
+.search{
+  /* flex: 1; */
+}
 
 .card-swiper{
-  height: 1000rpx;
+  flex-basis: 800rpx;
+  /* flex: 20; */
+  flex-grow: 1;
 }
 
 .swiper-item{
@@ -30,7 +43,7 @@ Page{
   justify-content: flex-start;
 }
 
-.swiper-item-calen-date{
+.swiper-item-calen-day{
   font-size: 64rpx;
   height: 100rpx;
   margin-right: 20rpx; 
@@ -46,8 +59,10 @@ Page{
   font-size: 48rpx;
   writing-mode: vertical-rl;
   margin:50rpx 0;
+  min-width: 200rpx;
   /* font-family: "chi-font"; */  
-  
+  /* flex-basis: 200rpx;
+  flex-grow: 1; */
 }
 
 .swiper-item-title text{
@@ -64,11 +79,13 @@ Page{
   font-size: 32rpx;
   /* font-family: "chi-font"; */
   overflow: hidden;
+  flex-grow: 1;
 }
 
 .swiper-item-operation{
   bottom: 0;
   padding: 20rpx 0;
+  height: 100rpx;
 }
 
 .swiper-item-operation>text{

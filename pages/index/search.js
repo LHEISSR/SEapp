@@ -7,7 +7,7 @@ Page({
   data: {
     inputText:"",
     searchHistoryList: [],
-    searchHintList: ["爱", "联想2", "联想3", "联想4",]
+    searchHintList: ["爱", "联想2", "联想3", "联想4","奇"]
   },
 
   /**
@@ -138,10 +138,12 @@ Page({
       searchHistoryList: newHistoryList,
       inputText: "",
     })
+    //存入储存
     wx.setStorage({
       key: 'searchHistoryList',
       data: newHistoryList,
     })
+    //跳转页面
     wx.navigateTo({
       url: './searchResult?word='+word
     })

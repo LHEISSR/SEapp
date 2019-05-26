@@ -1,34 +1,26 @@
 <!--pages/index/searchResult.wxml-->
 <view class='content'>
   <view class='word-intro'>
-    <view class='one-word' wx:for="{{intro}}" wx:key>
-      <image class='matts' src='../../image/matts.png' mode='scaleToFill' 
-      style="{{item.matts_pos}}"></image>
-      <view class='word'>{{item.character}}</view>
-      <view class='pronunciation'>{{item.pronu}}</view>
-    </view>
-  </view>
-  <scroll-view scroll-x class="bg-white nav">
-    <view class="flex text-center">
-      <view class="cu-item flex-sub {{index==TabCur?'text-brown cur':''}}" wx:for="{{TabName}}" wx:key bindtap="tabSelect" data-id="{{index}}">
-        {{item}}
+    <image class='matts' src='../../image/matts.png' mode='scaleToFill'></image>
+    <view class='word'>{{word}}</view>
+    <view class='pronunciation'>
+      <text style='font-weight:bold;'>读音</text>
+      <view class="pronList">
+        <text wx:key wx:for="{{pronList}}">
+          {{item}}
+        </text>
       </view>
     </view>
-  </scroll-view>
-  <view class='word-explaination' wx:if="{{TabCur===0}}">
-    <view class='one-explaination' wx:key wx:for="{{explaination}}">
-      <view class='word-tag cu-tag {{item.tagStyle}} round'>{{item.tag}}</view>
-      <view class='word-sense'>{{item.sense}}</view>
-    </view>
   </view>
-  <view class='word-examples' wx:if="{{TabCur===1}}">
-    <view class='one-sentense' wx:key wx:for="{{examples}}">
-      <text class='sentense text-black text-bold'>{{item.sent}}</text>
-      <text class='sentense-explanation text-df'>{{item.sent_ex}}</text>
-      <text class='word-in-sentense'>{{item.sense_in_sent}}</text>
+  <view class='word-explaination' wx:key wx:for="{{explaination}}" wx:for-item="item">
+    <view class='one-explaination'>
+      <view class='word-tag cu-tag bg-red round'>实词</view>
+      <view style='margin-right:10rpx'>{{item.sense}}</view>
+      <view style='margin-right:10rpx'> ( {{item.pronunciation}} ) </view>
     </view>
-  </view>
-  <view class='word-link' wx:if="{{TabCur===2}}">
-    <text class='github-link'>https://github.com</text>
+    <view wx:for="{{item.sentence}}" wx:for-item="sent" wx:for-index="index" wx:key>
+      <text class='sentense text-black'>{{sent}}</text>
+      <view class='sentense text-black text-bold'> —— {{item.source[index]}}</view>
+    </view>
   </view>
 </view>

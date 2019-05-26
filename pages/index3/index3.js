@@ -5,14 +5,25 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    canIUse: wx.canIUse('button.open-type.getUserInfo')
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    wx.getSetting({
+      success(res) {
+        if (res.authSetting['scope.userInfo']) {
+          // 已经授权，可以直接调用 getUserInfo 获取头像昵称
+          wx.getUserInfo({
+            success(res) {
+              console.log(res.userInfo)
+            }
+          })
+        }
+      }
+    })
   },
 
   /**
@@ -92,11 +103,31 @@ Page({
     })
   },
   testLogin(){
-    wx.openSetting({
+    wx.login({
       success(res) {
-        console.log(res.authSetting)
+        if (res.code) {
+          // 发起网络请求
+          wx.request({
+            url: 'http://zhiduoshao.xyz:8000/api/login',
+            method:"POST",
+            data: {
+              code: res.code
+            },
+            success(response) {
+              console.log(response.data)
+            }
+          })
+          // console.log(res.code)
+        } else {
+          console.log('登录失败！' + res.errMsg)
+        }
       }
     })
+    // wx.openSetting({
+    //   success(res) {
+    //     console.log(res.authSetting)
+    //   }
+    // })
   },
   bindGetUserInfo(e) {
     console.log(e.detail.userInfo)
