@@ -54,10 +54,13 @@ App({
     */
     me: {
       setting: {
-        index: 3,
-        indexOld: 2,
-        picker: ['5', '10', '15', '20', '25', '30', '35', '40', '45', '50'],
+        // index: 3,
+        // indexOld: 2,
+        // picker: ['5', '10', '15', '20', '25', '30', '35', '40', '45', '50'],
+        wordsOld: 15,
+        wordsTodo: 20,
       }
-    }
+    },
+    rankIndex: 5,
   }
 })

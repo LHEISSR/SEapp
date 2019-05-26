@@ -3,6 +3,7 @@
 
 <!-- 这里先用一个折线图给出最近的学习情况记录，下面是一些卡片 -->
 
+<!-- 主要是展示过去一周的学习时间吧，打卡日历其实在别的地方已经有了 -->
 
 
 <canvas canvas-id='lineCanvas' disable-scroll='false' style='width:{{canvasWidth}}px; height:{{canvasHeight}}px' bindtouchstart="touchHandler"></canvas>
