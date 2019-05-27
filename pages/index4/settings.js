@@ -1,5 +1,8 @@
 // pages/index4/settings.js
 
+var app = getApp();
+const unit = 5;
+
 // 请用 picker[index], picker[indexOld] 来获取用户设置
 
 Page({
@@ -14,24 +17,33 @@ Page({
   },
 
   PickerChange(e) {
-    console.log(e);
+    var idx = parseInt(e.detail.value);
     this.setData({
-      index: e.detail.value
-    })
+      index: idx
+    });
+    app.globalData.me.setting.wordsTodo = (1 + idx) * 5;
   },
 
   PickerChangeOld(e) {
-    console.log(e);
+    // console.log(e);
+    var idx = parseInt(e.detail.value)
     this.setData({
-      indexOld: e.detail.value
-    })
+      indexOld: idx
+    });
+    app.globalData.me.setting.wordsOld = (1 + idx) * 5;
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    // console.log('Open');
+    // console.log(app.globalData.me.setting.wordsTodo);
+    // console.log(app.globalData.me.setting.wordsOld);
+    this.setData({
+      index: app.globalData.me.setting.wordsTodo / unit - 1,
+      indexOld: app.globalData.me.setting.wordsOld / unit - 1,
+    })
   },
 
   /**
@@ -59,7 +71,9 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-
+    // console.log('Close');
+    // console.log(app.globalData.me.setting.wordsTodo);
+    // console.log(app.globalData.me.setting.wordsOld);
   },
 
   /**
