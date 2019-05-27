@@ -11,15 +11,15 @@
 </view>
 <view class='search-bottom'>
   <!-- 联想数据 -->
-  <view class="cu-list menu search-hint" wx:if="{{inputText.length > 0}}">
+  <!-- <view class="cu-list menu search-hint" wx:if="{{inputText.length > 0}}">
     <view class="cu-item" wx:for="{{searchHintList}}" wx:key bindtap="onPressHint" data-index="{{index}}">
       <view class="content">
         <text class="text-black">{{item}}</text>
       </view>
     </view>
-  </view>
+  </view> -->
   <!-- 历史数据 -->
-  <view class="cu-list menu search-history" wx:else="{{inputText.length == 0}}">
+  <view class="cu-list menu search-history">
     <view class="cu-item history-list" wx:for="{{searchHistoryList}}" wx:key>
       <view class="content" bindtap="onPressHistory" data-index="{{index}}">
         <text class="text-black">{{item}}</text>

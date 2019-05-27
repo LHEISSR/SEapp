@@ -5,6 +5,13 @@
   width: 100%;
 }
 
+.blank{
+  display: flex;
+  background-color: white;
+  padding: 50rpx;
+  justify-content: center;
+}
+
 .content>view{
   background-color: white;
 }
@@ -100,5 +107,6 @@
 }
 
 .sentence{
-  float: right;
+  display: flex;
+  justify-content: flex-end;
 }

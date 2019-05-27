@@ -1,4 +1,5 @@
 // pages/index3/index3.js
+var app = getApp();
 Page({
   data: {
     swiperList:[],
@@ -7,11 +8,11 @@ Page({
     cardCur: 0,
   },
   onLoad() {
-    this.towerSwiper('swiperList');
 
+    this.towerSwiper('swiperList');
     try {
       wx.clearStorageSync()
-      console.log("clear Storage");
+      // console.log("clear Storage");
     } catch (e) {
       // Do something when catch error
     }
@@ -23,7 +24,7 @@ Page({
     wx.getStorage({
       key: 'swiperList',
       success(res) {    //如果在储存中
-        console.log("in storage");
+        // console.log("in storage");
         wx.getStorage({
           key: 'swiperList',
           success(res) {
@@ -34,20 +35,35 @@ Page({
         })
       },
       fail(res) {      //如果没有在储存中
-        console.log("not in storage");
-        wx.request({
-          url: 'http://zhiduoshao.xyz:8888/api/yiju?userID=1&date=2019-5-25&num=5',
-          method: 'GET',
-          success(res) {
-            console.log(res.data)
-            that.setData({
-              swiperList: res.data.swiper_List,
-            })
-            wx.setStorage({
-              key: 'swiperList',
-              data: res.data.swiper_List,
-            })
-          }
+        // console.log("not in storage");
+        let userID = app.globalData.userID;
+        if(userID == 0){
+          //如果未登录
+          app.login().then(
+            function(res){
+              that._getSwiperlist();
+          })
+        }else{
+          //如果登陆了
+          that._getSwiperlist();
+        }
+      }
+    })
+  },
+
+  _getSwiperlist(){
+    var that = this;
+    wx.request({
+      url: `http://zhiduoshao.xyz:8888/api/yiju?userID=${app.globalData.userID}&date=2019-5-25&num=5`,
+      method: 'GET',
+      success(res) {
+        console.log(res.data)
+        that.setData({
+          swiperList: res.data.swiper_List,
+        })
+        wx.setStorage({
+          key: 'swiperList',
+          data: res.data.swiper_List,
         })
       }
     })
@@ -132,14 +148,13 @@ Page({
   clickFavor(e){
     var swiperList = this.data.swiperList;
     var cardCur = this.data.cardCur;
-    var isLike = !swiperList[cardCur].like;
-    console.log(isLike)
+    var isLike = swiperList[cardCur].like?0:1;
+    // console.log(isLike)
     let pushID = swiperList[cardCur].push_id;
-    console.log(pushID);
+    // console.log(pushID);
     var that = this;
     wx.request({
-      url: `http://zhiduoshao.xyz:8888/api/pushlike_yiju?
-      userID=1&pushID=${pushID}&like=${isLike}`,
+      url: `http://zhiduoshao.xyz:8888/api/pushlike_yiju?userID=${app.globalData.userID}&pushID=${pushID}&like=${isLike}`,
       method: "GET",
       success(res) {
         // console.log(res.data)
@@ -167,12 +182,12 @@ Page({
 
   },
   clickRead(e){
-    // wx.navigateTo({
-    //   url: './article?cardCur='+this.data.cardCur,
-    // })
     wx.navigateTo({
-      url: './searchResult?word=' + "奇"
+      url: './article?cardCur='+this.data.cardCur,
     })
+    // wx.navigateTo({
+    //   url: './searchResult?word=' + "奇"
+    // })
   },
   onSearchBarFocus(e) {
     wx.navigateTo({

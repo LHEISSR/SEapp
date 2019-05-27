@@ -108,7 +108,7 @@ Page({
         if (res.code) {
           // 发起网络请求
           wx.request({
-            url: 'http://zhiduoshao.xyz:8000/api/login',
+            url: 'http://zhiduoshao.xyz:8888/api/login',
             method:"POST",
             data: {
               code: res.code

@@ -121,6 +121,21 @@ Page({
       //   key: 'searchHistoryList',
       //   data: newHistoryList,
       // })
+      let word = this.data.inputText
+      var newHistoryList = this.data.searchHistoryList;
+      newHistoryList.push(word);    //日后再改
+      this.setData({
+        searchHistoryList: newHistoryList,
+        inputText: "",
+      })
+      //存入储存
+      wx.setStorage({
+        key: 'searchHistoryList',
+        data: newHistoryList,
+      })
+      wx.navigateTo({
+        url: './searchResult?word=' + word
+      })
     }else{
       wx.showToast({
         title: "请点击下方查词结果",

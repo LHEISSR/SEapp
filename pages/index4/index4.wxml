@@ -1,7 +1,7 @@
 <!--pages/index4/index4.wxml-->
 <view class="userinfo">
-  <view class="cu-avatar xl round" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big99008.jpg);"></view>
-  <view class="username margin-bottom margin-top">周海沧</view>
+  <view class="cu-avatar xl round" style="{{avatarUrlStyle}}"></view>
+  <view class="username margin-bottom margin-top">{{nickName}}</view>
 </view>
 <view class="cu-list menu margin-top">
   <view class="cu-item arrow">

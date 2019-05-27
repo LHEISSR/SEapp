@@ -1,5 +1,5 @@
 <!--pages/index/searchResult.wxml-->
-<view class='content'>
+<view class='content' wx:if="{{valid}}">
   <view class='word-intro'>
     <image class='matts' src='../../image/matts.png' mode='scaleToFill'></image>
     <view class='word'>{{word}}</view>
@@ -19,8 +19,13 @@
       <view style='margin-right:10rpx'> ( {{item.pronunciation}} ) </view>
     </view>
     <view wx:for="{{item.sentence}}" wx:for-item="sent" wx:for-index="index" wx:key>
-      <text class='sentense text-black'>{{sent}}</text>
-      <view class='sentense text-black text-bold'> —— {{item.source[index]}}</view>
+      <text class='text-black'>{{sent}}</text>
+      <view class='sentence'>
+        <view class='text-black text-bold'> —— {{item.source[index]}}</view>
+      </view>
     </view>
   </view>
+</view>
+<view class="blank" wx:else>
+  抱歉，暂无该词的数据
 </view>

@@ -1,6 +1,5 @@
 // pages/index/searchResult.js
 Page({
-
   /**
    * 页面的初始数据
    */
@@ -8,10 +7,7 @@ Page({
     explaination: [],
     word:"",
     pronList: [],
-    intro:[],           
-    examples:[],
-    TabCur:0,
-    TabName:["释义","例句","链接"],
+    valid:false,
   },
 
   /**
@@ -27,19 +23,21 @@ Page({
       method: "GET",
       success(res){
         console.log(res.data);
-        let pronList = [];
-        for(let ex of res.data){
-          // console.log(ex)
-          if(!pronList.includes(ex.pronunciation)) pronList.push(ex.pronunciation);
+        if(res.data.length != 0){
+          let pronList = [];
+          for(let ex of res.data){
+            // console.log(ex)
+            if(!pronList.includes(ex.pronunciation)) pronList.push(ex.pronunciation);
+          }
+          that.setData({
+            pronList: pronList,
+            word: options.word,
+            explaination: res.data,
+            valid:true,
+          })
         }
-        that.setData({
-          pronList: pronList,
-          word: options.word,
-          explaination: res.data
-        })
       }
     })
-
 
     //================ 加载 intro 信息 =======================
     //获取数据

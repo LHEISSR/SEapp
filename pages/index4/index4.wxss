@@ -4,7 +4,7 @@
   flex-direction: column;
   align-items: center;
   padding-top:50rpx;
-  background-image: url(https://ossweb-img.qq.com/images/lol/web201310/skin/big99008.jpg);
+  background-color: white;
 }
 .username {
   text-align: center;
