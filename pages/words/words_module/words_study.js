@@ -17,6 +17,9 @@ var word_ListStatic = [
   }
 ]
 
+var util = require('../../../utils/util.js');
+var app = getApp();
+
 Page({
 
   /**
@@ -29,6 +32,7 @@ Page({
     word_head: null,    // 背诵队列头
     word_tail: null,    // 背诵队列尾
     word_que: new Array(), 
+    word_startTime: 0
   },
 
 
@@ -45,8 +49,14 @@ Page({
       word_now: 0
     })
     */
+    
+    var date = new Date()
+    var startTime = date.getHours() * 3600 + date.getMinutes() * 60 + date.getSeconds()
+    console.log(startTime)
 
-    console.log(that.data)
+    this.setData({
+      word_startTime: startTime
+    })
 
     wx.request({
       url: 'http://zhiduoshao.xyz:8888/api/getwords/',//请求地址
@@ -107,20 +117,29 @@ Page({
     /*
       规范后端的接口 
     */
+
+    var date = new Date()
+    var endTime = date.getHours() * 3600 + date.getMinutes() * 60 + date.getSeconds()
+    console.log(endTime)
+
+    var studytime = (endTime - this.data.word_startTime + 24 * 3600 ) % (24 * 3600) + app.globalData.studyTime
+    getApp().globalData.studyTime = studytime
+
+    console.log(getApp().globalData)
     wx.request({
-      url: 'http://zhiduoshao.xyz:8888/api/finish',
+      url: 'http://zhiduoshao.xyz:8888/api/save/',
       data:
       {
         userID: 2,
-        data: res.data,
+        data: this.data.word_list
       },
       method: "POST",
       fail: function (err) {
-        console.log("save------------")
+        console.log("save -- error")
         console.log(err)
       },
       success: function (ress) {
-        //console.log("save -- success")
+        console.log("save -- success")
         //console.log(ress.data)
       }
     })  
@@ -146,17 +165,20 @@ Page({
   },
   
   _UnKnow: function(){
-    var list = this.data.list
+    console.log(this.data)
+    var list = this.data.word_list
     var pageStatus = this.data.word_pageStatus + 1
     var head = this.data.word_head, tail = this.data.word_tail
     var que = this.data.word_que
     
-    if (pageStatus == 1)
+    console.log(233)
+    if (this.data.word_pageStatus == 1)
     { 
+      console.log(list)
       list[que[head % que.length]].word_RemberedTimesChange = -1
-      que[(++tail)%que.length] = que[head] 
+      que[(++tail) % que.length] = que[head%que.length]  
     }
-
+    console.log(que)
     this.setData({
       word_list: list,
       word_pageStatus: pageStatus,
@@ -167,7 +189,13 @@ Page({
   },
 
   _Next: function(){ 
-    console.log(this.data)
+    if (this.data.word_todayRemembered == this.data.word_list.length)
+    {
+      wx.redirectTo({
+        url: './words_finish',
+      })
+    }
+
     var head = this.data.word_head
     head++;
     this.setData({
@@ -175,6 +203,4 @@ Page({
       word_pageStatus: 0
     })
   }
-
-
 })

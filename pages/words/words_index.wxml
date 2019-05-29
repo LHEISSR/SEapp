@@ -11,7 +11,7 @@
   <wux-white-space />
 
   <view class="word_index_circle">
-    <wux-circle percent="{{precent}}" sAngle = "270" size="{{winWidth * 0.8}}" strokeWidth="{{winWidth * 25/375}}" color="#D9C9BA" backgroundColor="#e5e5e5">
+    <wux-circle percent="{{precent}}" sAngle = "270" size="{{winWidth * 0.8}}" strokeWidth="{{winWidth * 25/375}}" color="#D9C9BA" backgroundColor="#e5e5e5" >
     {{ precent + '%'}} 
     </wux-circle>
   </view>

@@ -75,6 +75,7 @@ App({
     /*
     这些东西需要
     */
+    studyTime: 0, // 当日学习时长
     me: {
       setting: {
         wordsOld: 15,

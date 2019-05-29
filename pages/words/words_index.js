@@ -46,7 +46,7 @@ Page({
 
   clickStudy: function() {
     wx.navigateTo({
-      url: './words_study/words_study',
+      url: './words_module/words_study',
     })
   },
 })
