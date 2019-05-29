@@ -71,7 +71,6 @@ App({
   globalData: {
     userInfo: null,
     userID: 0,
-    word_book: 234,
 
     /*
     这些东西需要

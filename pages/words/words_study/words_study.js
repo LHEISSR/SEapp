@@ -23,10 +23,12 @@ Page({
    * 页面的初始数据
    */
   data: {
-    word_list: null,  // 单词表
-    word_now: null,    // number 当前背诵的单词是单词表的第几个
     word_todayRemembered: 0, // number 当日已经背诵的几个单词 
-    word_pageStatus:0,  // 0 背词， 1 提示， 2 词汇详细信息
+    word_pageStatus: 0,  // 0 背词， 1 提示， 2 词汇详细信息
+    word_list: null,  // 单词表
+    word_head: null,    // 背诵队列头
+    word_tail: null,    // 背诵队列尾
+    word_que: new Array(), 
   },
 
 
@@ -37,35 +39,56 @@ Page({
     var that = this;
 
     // 前端静态文件模拟获取
+    /*
     that.setData({
       word_list: word_ListStatic,
       word_now: 0
     })
+    */
 
     console.log(that.data)
 
-    /* 后端单词表获取
-    var list = wx.getStorageSync("list")
-    if (list)
-    {
-        that.setData({
-          word_list:list
-        })
-    }
     wx.request({
-      url: 'https://test.com/getproductlist',
+      url: 'http://zhiduoshao.xyz:8888/api/getwords/',//请求地址
+      data: {//发送给后台的数据
+        userID: 2
+      },
+      method: "POST",//get为默认方法/POST
       success: function (res) {
-        if (res.statusCode === 200) {
-          list = res.data.list
-          that.setData({ // 再次渲染列表
-            list: list
-          })
-          wx.setStorageSync("list", list) // 覆盖缓存数据
+        console.log("-----------")
+        console.log(res.data.data.word_List)
+        that.setData({
+          word_list: res.data.data.word_List,
+          word_head: 0
+        })
+
+      },
+      fail: function (err) {
+        console.log(err)
+      },//请求失败
+      complete: function () {
+
+        var que = new Array()
+        var tail = -1
+        for (var i = 0; i < that.data.word_list.length; i++)
+        if (that.data.word_list[i].word_Show == false || (that.data.word_list[i].word_Show == true && that.data.word_list[i].word_RemberedTimesChange == -1)){
+          que[++tail] = i;  
+        }
+        for (var i = 0, j, c; i <= tail; ++i)
+        {
+          j = Math.floor(Math.random()*(i+1))
+          c = que[j]
+          que[j] = que[i]
+          que[i] = c
         }
 
-      }
+        that.setData({
+          word_todayRemembered: that.data.word_list.length - que.length,
+          word_tail: tail,
+          word_que: que
+        })
+      }//请求完成后执行的函数
     })
-    */
   },
 
   /**
@@ -80,29 +103,77 @@ Page({
     }
   },
 
-  _Know: function(){
-    var list = this.data.word_list;
-    var todayRemembered = this.data.word_todayRemembered + 1;
+  onUnload: function(){
+    /*
+      规范后端的接口 
+    */
+    wx.request({
+      url: 'http://zhiduoshao.xyz:8888/api/finish',
+      data:
+      {
+        userID: 2,
+        data: res.data,
+      },
+      method: "POST",
+      fail: function (err) {
+        console.log("save------------")
+        console.log(err)
+      },
+      success: function (ress) {
+        //console.log("save -- success")
+        //console.log(ress.data)
+      }
+    })  
+  },
 
-    list[this.data.word_now].word_TodayStatus = true;
+
+  _Know: function(){
+    var list = this.data.word_list
+    var que = this.data.word_que
+    var head = this.data.word_head
+    var todayRemembered = this.data.word_todayRemembered
+    
+    list[que[head % que.length]].word_Show = true
+    list[que[head % que.length]].word_RemberedTimesChange++
+    todayRemembered++
     
     this.setData({
+        word_list: list,
         word_pageStatus:2,
-        word_todayRemembered: todayRemembered,
-        word_list: list
+        word_todayRemembered: todayRemembered       
       })
 
   },
   
   _UnKnow: function(){
+    var list = this.data.list
     var pageStatus = this.data.word_pageStatus + 1
+    var head = this.data.word_head, tail = this.data.word_tail
+    var que = this.data.word_que
+    
+    if (pageStatus == 1)
+    { 
+      list[que[head % que.length]].word_RemberedTimesChange = -1
+      que[(++tail)%que.length] = que[head] 
+    }
+
     this.setData({
-      word_pageStatus: pageStatus
+      word_list: list,
+      word_pageStatus: pageStatus,
+      word_head: head,
+      word_tail: tail,
+      word_que: que
     })
   },
 
-  _Next: function(){
-
+  _Next: function(){ 
+    console.log(this.data)
+    var head = this.data.word_head
+    head++;
+    this.setData({
+      word_head: head,
+      word_pageStatus: 0
+    })
   }
 
 

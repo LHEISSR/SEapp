@@ -20,17 +20,17 @@
     <view class='status'>
       <wux-icon type='ios-radio-button-on' color="#ffffff" size="20"/> 
       <text>{{word_learing}}</text>
-      <text>学习中词汇</text>
+      <text>学习中字词</text>
     </view>
     <view class='status'>
       <wux-icon type='ios-checkmark-circle' color="#ffffff" size="20"/>
       <text>{{word_learned}}</text>
-      <text>已学习词汇</text>
+      <text>已学习字词</text>
     </view>
     <view class='status'>
       <wux-icon type='ios-close-circle' color="#ffffff" size="20"/>
       <text>{{word_unlearn}}</text> 
-      <text>未学习词汇</text>
+      <text>未学习字词</text>
     </view>
   </view>
 
