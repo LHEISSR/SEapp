@@ -14,6 +14,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    // 看来做每本书的学习进度是没有办法了
     // section: [
     //   {
     //     name: "七年级上册",
@@ -28,16 +29,8 @@ Page({
     //     progress: 50
     //   }
     // ],
+
     // 这里记录了每天学习的词汇数量，这里我还是改成学习时间好了
-    // numbers: [
-    //   5, 
-    //   4, 
-    //   6,
-    //   2,
-    //   5, 
-    //   6,
-    //   7,
-    // ],
     numbers: [],
     canvasWidth: 320,
     canvasHeight: 200,
@@ -65,23 +58,6 @@ Page({
       data: data
     }
   },
-
-  /**
-  updateData: function () {
-    var simulationData = this.createSimulationData();
-    var series = [{
-      name: '成交量1',
-      data: simulationData.data,
-      format: function (val, name) {
-        return val.toFixed(2) + '万';
-      }
-    }];
-    lineChart.updateData({
-      categories: simulationData.categories,
-      series: series
-    });
-  },
-  */
 
   // 返回过去 N (numdays) 天的学习时间，从服务器获取数据
   getData: function() {
@@ -117,39 +93,12 @@ Page({
       }
     })
 
-    // var categories = util4.last_days(numdays).reverse();
-    // // 怎样从后端获取数据是一个很大的问题
-    // // var data = [4, 5, 7, 1, 2, 5, 7];
-    // // console.log(nums);
-    // return {
-    //   categories: categories,
-    //   data: nums,
-    // }
   },
-
-  // // 返回过去 N (numdays) 天的学习时间，从服务器获取数据
-  // getNumbers: function () {
-  //   var that = this;
-  //   // 在 url 里填写 userID，get 可以用这种方式来获取特定用户的信息
-  //   wx.request({
-  //     url: `http://zhiduoshao.xyz:8888/api/schedule?user_id=${app.globalData.userID}`,
-  //     method: 'GET',
-  //     success(res) {
-  //       var zeros = new Array(numdays).fill(0);
-  //       var raw = res.data.numbers;
-  //       var nums = raw.concat(zeros);
-  //       console.log(nums);
-  //       that.setData({
-  //         numbers: nums.slice(0, numdays),
-  //       });
-  //       // console.log(res);
-  //     }
-  //   })
-  // },
 
   /**
    * 生命周期函数--监听页面加载
    */
+  // 把代码写成这个样子我能怎么办，我也很无奈啊
   onLoad: function (options) {
     var that = this;
 
@@ -173,40 +122,73 @@ Page({
       canvasHeight: cvsHeight,
     })
 
-    var data = that.getData();
-    console.log(data);
-    lineChart =  new wxCharts({
-      canvasId: 'lineCanvas',
-      type: 'line',
-
-      categories: data.categories,
-      series: [{
-        name: '过去一周的学习时长',
-        // 这里传数据的方式无解啊
-        data: data.data,
-        format: function (val) {
-          return val.toFixed(1);
+    // var data = that.getData();
+    var nums;
+    var data;
+    wx.request({
+      url: `http://zhiduoshao.xyz:8888/api/schedule?user_id=${app.globalData.userID}`,
+      method: 'GET',
+      success(res) {
+        var zeros = new Array(numdays).fill(0);
+        var raw = res.data.numbers;
+        nums = zeros.concat(raw);
+        var len = nums.length;
+        nums = nums.slice(len - numdays, len);
+        console.log(nums);
+        that.setData({
+          numbers: nums,
+        });
+        // console.log(res);
+        var categories = util4.last_days(numdays).reverse();
+        // return {
+        //   categories: categories,
+        //   data: nums,
+        // }
+        data = {
+          'categories': categories,
+          'data': nums,
         }
+        console.log(data);
+        lineChart = new wxCharts({
+          canvasId: 'lineCanvas',
+          type: 'line',
+
+          categories: data.categories,
+          series: [{
+            name: '过去一周的学习时长',
+            // 这里传数据的方式无解啊
+            data: data.data,
+            format: function (val) {
+              return val.toFixed(1);
+            }
+          },
+          ],
+          xAxis: {
+            disableGrid: true
+          },
+          yAxis: {
+            title: '（分钟）',
+            format: function (val) {
+              return val.toFixed(0);
+            },
+            min: 0
+          },
+          width: cvsWidth,
+          height: cvsHeight,
+          extra: {
+            lineStyle: 'curve'
+          },
+          // Set the background color
+          background: '#F1F1F1',
+        });
       },
-      ],
-      xAxis: {
-        disableGrid: true
-      },
-      yAxis: {
-        title: ' ',
-        format: function (val) {
-          return val.toFixed(0);
-        },
-        min: 0
-      },
-      width: cvsWidth,
-      height: cvsHeight,
-      extra: {
-        lineStyle: 'curve'
-      },
-      // Set the background color
-      background: '#F1F1F1',
-    });
+      fail(res) {
+        return {
+          categories: -1,
+          data: -1,
+        }
+      }
+    })
 
     setTimeout(function () {
       that.setData({

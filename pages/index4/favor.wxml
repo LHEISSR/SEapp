@@ -37,12 +37,11 @@
 
   <block wx:if="{{TabCur==1}}">
     <block wx:for="{{favors.learn}}">
-      <navigator open-type="navigate" hover-class='navigator-hover' url="/pages/index/article?cardCur=0">
+      <navigator open-type="navigate" hover-class='navigator-hover' url=".">
         <view class="cu-bar bg-white solid-bottom margin-top">
           <view class="action">
             <text class="cuIcon-title left">{{item.name}} \n</text>
             <view class="swiper-item-preview">（《{{item.from_which}}》）</view>
-            <!-- <text text-align='right'>{{item.from_which}}</text> -->
           </view>
         </view>
         <view class="padding bg-white">
@@ -58,13 +57,8 @@
   <block wx:if="{{TabCur==2}}">
     <view class="margin-top">
     </view>
-    <!-- <button wx:for="{{vocab}}">
-      <view class="flex-wrp" style="flex-direction:row;">
-        <view class="flex-item bc_green">{{item.name}} "出自" {{item.from_which}}</view>
-      </view>
-    </button> -->
     <block wx:for="{{favors.vocab}}">
-      <navigator open-type="navigate" hover-class='navigator-hover' url="/pages/index/article?cardCur=0">
+      <navigator open-type="navigate" hover-class='navigator-hover' url=".">
         <view class="cu-bar bg-white solid-bottom">
           <view class="action">
             <text class="cuIcon-title left">{{item.name}} \n</text>
