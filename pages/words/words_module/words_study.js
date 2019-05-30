@@ -19,6 +19,9 @@ var word_ListStatic = [
 
 var util = require('../../../utils/util.js');
 var app = getApp();
+let touchDotX = 0; //X按下时坐标
+let touchDotY = 0; //y按下时坐标
+let card_color = new Array("#d9c9ba", "#dfd2c5", "#e6dbd1", "#ece4dc", "#f2ede8", "#f2ede8", "#ffffff") 
 
 Page({
 
@@ -27,12 +30,16 @@ Page({
    */
   data: {
     word_todayRemembered: 0, // number 当日已经背诵的几个单词 
-    word_pageStatus: 0,  // 0 背词， 1 提示， 2 词汇详细信息
     word_list: null,  // 单词表
     word_head: null,    // 背诵队列头
     word_tail: null,    // 背诵队列尾
     word_que: new Array(), 
-    word_startTime: 0
+    word_startTime: 0,
+    animationData:{},
+    card_color1: card_color[0],
+    card_color2: card_color[1],
+    card_color3: card_color[2],
+    card3_show: true
   },
 
 
@@ -65,8 +72,6 @@ Page({
       },
       method: "POST",//get为默认方法/POST
       success: function (res) {
-        console.log("-----------")
-        console.log(res.data.data.word_List)
         that.setData({
           word_list: res.data.data.word_List,
           word_head: 0
@@ -99,6 +104,7 @@ Page({
         })
       }//请求完成后执行的函数
     })
+    console.log(this.data)
   },
 
   /**
@@ -145,62 +151,147 @@ Page({
     })  
   },
 
+  // 触摸函数
+  touchstart: function (event) {
+    touchDotX = event.touches[0].pageX; // 获取触摸时的原点
+    touchDotY = event.touches[0].pageY;
+    console.log("起始点的坐标X:" + touchDotX);
+    console.log("起始点的坐标Y:" + touchDotY);
+  },
 
-  _Know: function(){
+  touchend: function (event) {
+    // 手指离开屏幕时记录的坐标
+    let touchMoveX = event.changedTouches[0].pageX;
+    let touchMoveY = event.changedTouches[0].pageY;
+    // 起始点的坐标(x0,y0)和手指离开时的坐标(x1,y1)之差
+    let tmX = touchMoveX - touchDotX;
+    let tmY = touchMoveY - touchDotY;
+
+    console.log("tmX:" + tmX);
+    console.log("tmY:" + tmY);
+    // 两点横纵坐标差的绝对值
+    let absX = Math.abs(tmX);
+    let absY = Math.abs(tmY);
+    //起始点的坐标(x0,y0)和手指离开时的坐标(x1,y1)之间的距离
+    let delta = Math.sqrt(absX * absX + absY * absY);
+    console.log('起始点和离开点距离:' + delta + 'px');
+    // 如果delta超过60px（可以视情况自己微调）,判定为手势触发
+    if (delta >= 60) {
+
+      if (tmY > 0){
+        tmY += app.globalData.windowHeight
+      }else{
+        tmY -= app.globalData.windowHeight
+      }
+      console.log("tmx tmxy", tmX, tmY);
+      if(tmX < 0){
+        tmX -= app.globalData.windowWidth
+        console.log("tmx tmxy", tmX, tmY);
+        this._UnKnow(null,tmX, tmY);
+      }else{
+        tmX += app.globalData.windowWidth
+        console.log("tmx tmxy", tmX, tmY);
+        this._Know(null, tmX, tmY);
+      }
+      
+    } else {
+      console.log("手势未触发=====");
+    }
+
+    // 让上一张卡片展现正面（如果之前翻转过的话）
+    this.setData({
+      isFront3: true,
+    });
+  },
+
+  Animation: function (translateXX, translateYY) {
+    let animation = wx.createAnimation({
+      duration: 1000,
+      timingFunction: "ease",
+    });
+    this.animation = animation;
+
+    if (translateXX > 0) {
+      this.animation.translateY(translateYY).rotate(20).translateX(translateXX).opacity(1).step({duration: 300});
+    } else {
+      this.animation.translateY(translateYY).rotate(-20).translateX(translateXX).opacity(1).step({duration: 300});
+    }
+
+    /*this.animation.translateY(0).translateX(0).opacity(1).rotate(0).step({
+      duration: 30
+    });*/
+
+    let color1 = this.data.card_color2, color2 = this.data.card_color3
+
+    this.setData({
+      animationData: this.animation.export(),
+      card_color1: color1,
+      card_color2: color2,
+    });
+
+    this.animation.translateY(0).translateX(0).opacity(1).rotate(0).step({
+      duration: 0
+    })
+
+    setTimeout(() => {
+      this.setData({
+        animationData: this.animation.export(),
+        card_color3: card_color[Math.floor(Math.random() * (card_color.length))]
+        //card_color3: card_color[(++card_color_index) % card_color.length]
+      })
+    }, 600)
+  },
+
+  //相关操作函数
+
+
+  _Know: function (_, translateXX = app.globalData.windowWidth * 1.5, translateYY = -app.globalData.windowHeight * 1.5){
     var list = this.data.word_list
     var que = this.data.word_que
-    var head = this.data.word_head
+    var head = this.data.word_head, tail = this.data.word_tail
     var todayRemembered = this.data.word_todayRemembered
     
     list[que[head % que.length]].word_Show = true
     list[que[head % que.length]].word_RemberedTimesChange++
+    head++
     todayRemembered++
     
-    this.setData({
-        word_list: list,
-        word_pageStatus:2,
-        word_todayRemembered: todayRemembered       
-      })
 
-  },
-  
-  _UnKnow: function(){
-    console.log(this.data)
-    var list = this.data.word_list
-    var pageStatus = this.data.word_pageStatus + 1
-    var head = this.data.word_head, tail = this.data.word_tail
-    var que = this.data.word_que
-    
-    console.log(233)
-    if (this.data.word_pageStatus == 1)
-    { 
-      console.log(list)
-      list[que[head % que.length]].word_RemberedTimesChange = -1
-      que[(++tail) % que.length] = que[head%que.length]  
-    }
-    console.log(que)
-    this.setData({
-      word_list: list,
-      word_pageStatus: pageStatus,
-      word_head: head,
-      word_tail: tail,
-      word_que: que
-    })
-  },
-
-  _Next: function(){ 
-    if (this.data.word_todayRemembered == this.data.word_list.length)
+    this.Animation(translateXX, translateYY)
+    if (head >tail)
     {
       wx.redirectTo({
         url: './words_finish',
       })
     }
-
-    var head = this.data.word_head
-    head++;
     this.setData({
+        word_list: list,
+        word_head: head,
+        word_todayRemembered: todayRemembered       
+      })
+    console.log(this.data)
+  },
+  
+  _UnKnow: function (_, translateXX = -app.globalData.windowWidth * 1.5, translateYY = -app.globalData.windowHeight * 1.5){
+    console.log(this.data)
+    var list = this.data.word_list
+    var head = this.data.word_head, tail = this.data.word_tail
+    var que = this.data.word_que
+    
+    console.log(233)
+    
+    list[que[head % que.length]].word_RemberedTimesChange = -1
+    que[(++tail) % que.length] = que[(head++)%que.length]  
+    
+    
+    this.Animation(translateXX, translateYY)
+    this.setData({
+      word_list: list,
       word_head: head,
-      word_pageStatus: 0
+      word_tail: tail,
+      word_que: que
     })
+    
+    console.log(this.data)
   }
 })

@@ -1,40 +1,41 @@
 <view class="page">
+
+  <view class="body-swiper1" bindtouchstart="touchstart" bindtouchend="touchend" style="z-index:{{index1}};top:{{ballTop1}}rpx;  margin-left:{{ballLeft1}}rpx;width:{{ballWidth1}}rpx;" animation="{{animationData}}">
+    <!-- 正面 -->
+    <block wx:if="{{true}}">
+      <view class="body-container" style="background-color:{{card_color1}}">
+        <text style="text-align:center">卡片1正面</text>
+        <text> {{word_list[word_que[word_head % word_que.length]].word_Sentence}} </text>
+      </view>
+    </block>
+    <!-- 反面 -->
+    <block wx:else>
+      <view class="body-container">
+        <text style="text-align:center">卡片1反面</text>
+      </view>
+    </block>
+  </view>
+
+  <!-- 第二张 -->
+  <view class="body-swiper2">
+    <block >
+      <view class="body-container" style="background-color:{{card_color2}}">
+      </view>
+    </block>
+  </view>
+  <!-- 第三张 -->
+  <view wx:if="{{card3_show}}" class="body-swiper3">
+    <block >
+      <view class="body-container" style="background-color:{{card_color3}}">
+      </view>
+    </block>
+  </view>
+
+  <view>
+    <button class="btn1" role="button" bindtap="_UnKnow"> 我不认识</button>
+  </view>
   
   <view>
-    <wux-white-space />
-    <text>今日词汇 {{word_todayRemembered}}/{{word_list.length}}</text>
-    <text></text>  
-    <wux-white-space />
-    <wux-progress activeColor="#D9C9BA" background-color="#707070" shape="square" percent="{{word_todayRemembered/word_list.length * 100}}" />
-    <wux-white-space />  
+    <button class="btn2" role="button" bindtap="_Know"> 我认识</button>
   </view>
-  
-  <view class="word_page"> 
-    <view wx:if="{{word_pageStatus<=1}}" class="word_page0">
-      <text>
-        {{word_list[word_que[word_head % word_que.length]].word_Sentence}}
-      </text>
-    </view>
-
-    <view wx:if="{{word_pageStatus==1}}" class="word_page1"> 
-      <text>
-        {{word_list[word_que[word_head % word_que.length]].word_SimilarSentence}}
-      </text>
-    </view>
-    
-    <view wx:if="{{word_pageStatus==2}}" class="word_page2">
-      
-    </view>
-  </view>
-
-
-  <view  class="add_btn">
-     <button wx:if="{{word_pageStatus<=1}}" class="btn1" role="button" bindtap="_Know"> 我认识</button>
-     <wux-white-space />  
-
-     <button wx:if="{{word_pageStatus<=1}}" class="btn2" role="button" bindtap="_UnKnow" >{{(word_pageStatus == 0)?"提示一下":"不认识"}}</button>
-
-     <button wx:if="{{word_pageStatus==2}}" class="btn3" role="button" bindtap="_Next" >下一个</button>
-  </view>
-  
 </view>

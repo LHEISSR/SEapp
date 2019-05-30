@@ -22,6 +22,14 @@ App({
         }
       }
     })
+
+    wx.getSystemInfo({
+      success: function (res) {
+        that.globalData.windowWidth = res.windowWidth
+        that.globalData.windowHeight = res.windowHeight
+      }
+    });
+
   },
   login:function(){
     let that = this;
@@ -72,6 +80,8 @@ App({
     userInfo: null,
     userID: 0,
 
+    windowWidth: 0,
+    windowHeigth: 0,
     /*
     这些东西需要
     */
