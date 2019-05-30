@@ -13,6 +13,8 @@ Page({
     word_learned: 200,
     word_unlearn: 200,
   },
+
+
   /**
    * 生命周期函数--监听页面加载
    */
@@ -21,7 +23,6 @@ Page({
     var data = this.data;
     /*
       请求背词状态也信息
-
     */
 
 
@@ -45,7 +46,7 @@ Page({
 
   clickStudy: function() {
     wx.navigateTo({
-      url: './words_study/words_study',
+      url: './words_module/words_study',
     })
   },
 })

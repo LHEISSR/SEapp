@@ -4,6 +4,7 @@ var time = 0;
 var touchDot = 0;//触摸时的原点
 var interval = "";
 var flag_hd = true;
+var app = getApp()
 
 var startX, startY;
 
@@ -19,44 +20,50 @@ Page({
       x: undefined,
       y: undefined,
     },
-    yiju: [
-      {
-        id: 1,
-        name: "陈澄钧列传",
-      }
-    ],
-    learn: [
-      {
-        id: 1,
-        name: "逻辑层",
-        from_which: "陈澄钧列传",
-        link: "跳转到对应的页面",
-      }
-    ],
-    vocab: [
-      {
-      id: 1,
-      name: "逻辑",
-      link: "跳转到原始页面"
-      }
-    ],
-    
-    yijuList:[
-      {
-        push_id: 2019420,
-        date: "13",
-        weekday: "周六",
-        lunar: "三月初六",
-        title: "陈澄钧列传",
-        dynasty: "宋",
-        author: "张云哲",
-        article: "一次 touchmove 的响应需要经过 2 次的逻辑层和渲染层的通信以及一次渲染，通信的耗时比较大。",
-        content: "张云哲，宋代著名文学家、哲学家、历史学家",
-        like_count: 187,
-        like: false,
-      },
-    ]
-    
+
+    // article 用 pushid
+    // vocab 用 汉字 做索引
+    // 这部分 data 的渲染和首页的渲染是不一样的，因为首页只请求少量数据，
+    // 但是这里需要把用户的收藏全都请求过来，
+    // 至于性能优化，就留给后人好了，
+    //    - 比如，
+    // favors: {
+    //   yiju: [
+    //     {
+    //       id: 1,
+    //       name: "陈澄钧列传",
+    //       dynasty: "宋",
+    //       author: "zyz",
+    //       intro: "一次 touchmove 的响应需要经过 2 次的逻辑层和渲染层的通信以及一次渲染，通信的耗时比较大。"
+    //     },
+    //   ],
+    //   learn: [
+    //     {
+    //       id: 1,
+    //       name: "逻辑层",
+    //       from_which: "陈澄钧列传",
+    //       meaning: "用于控制网页的逻辑控制",
+    //     },
+    //     {
+    //       id: 2,
+    //       name: "逻辑层",
+    //       from_which: "陈澄钧列传",
+    //       meaning: "用于控制网页的逻辑控制",
+    //     }
+    //   ],
+    //   vocab: [
+    //     {
+    //     id: 1,
+    //     name: "逻辑",
+    //     link: "跳转到原始页面"
+    //     },
+    //     {
+    //       id:2,
+    //       name: "毫无逻辑",
+    //     }
+    //   ],
+    // },
+    favors: {},
   },
 
   tabSelect(e) {
@@ -71,10 +78,30 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    var that = this.data;
+    var that = this;
     var res = wx.getSystemInfoSync();
     this.setData({
       'screenHeight': res.screenHeight,
+    })
+
+    // 在这里向后端请求数据，以填充这三个部分
+    wx.request({
+      url: `http://zhiduoshao.xyz:8888/api/returncollected/?user_id=${app.globalData.userID}`,
+      method: 'GET',
+      // data: {
+
+      // },
+      success(res) {
+        that.setData({
+          favors: res.data,
+        });
+        // console.log(res.data);
+        // 还是别存放在缓存里了，主要是同步问题，该性能提升方案交给后人
+        // wx.setStorage({
+        //   key: 'favors',
+        //   data: res.data,
+        // })
+      }
     })
   },
 

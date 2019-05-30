@@ -2,6 +2,7 @@
 
 var app = getApp();
 const unit = 5;
+const url1 = `http://zhiduoshao.xyz:8888/api/setlearn`;
 
 // 请用 picker[index], picker[indexOld] 来获取用户设置
 
@@ -21,7 +22,32 @@ Page({
     this.setData({
       index: idx
     });
-    app.globalData.me.setting.wordsTodo = (1 + idx) * 5;
+    var num = (1 + idx) * 5
+    app.globalData.me.setting.wordsTodo = num;
+
+    // wx.request({
+    //   url: url1,
+    //   method: 'POST',
+    //   data: {
+    //     pkg: {
+    //       user_id: app.globalData.userID,
+    //       word_num: num,
+    //       review_num: app.globalData.me.setting.wordsOld,
+    //       mode: 0,
+    //     }
+    //   },
+    //   success(res) {
+    //     console.log(res);
+    //     console.log(app.globalData.userID);
+    //   }
+    // })
+    wx.request({
+      url: url1 + `?user_id=${app.globalData.userID}&word_num=${num}&review_num=${app.globalData.me.setting.wordsOld}&mode=0`,
+      method: 'GET',
+      // success(res) {
+      //   console.log('Success!');
+      // }
+    })
   },
 
   PickerChangeOld(e) {
@@ -30,7 +56,28 @@ Page({
     this.setData({
       indexOld: idx
     });
-    app.globalData.me.setting.wordsOld = (1 + idx) * 5;
+    var num = (1 + idx) * 5
+    app.globalData.me.setting.wordsOld = num;
+
+    // wx.request({
+    //   url: url1,
+    //   method: 'POST',
+    //   data: {
+    //     pkg: {
+    //       user_id: app.globalData.userID,
+    //       word_num: app.globalData.me.setting.wordsTodo,
+    //       review_num: num,
+    //       mode: 0,
+    //     }
+    //   }
+    // })
+    wx.request({
+      url: url1 + `?user_id=${app.globalData.userID}&word_num=${app.globalData.me.setting.wordsTodo}&review_num=${num}&mode=0`,
+      method: 'GET',
+      // success(res) {
+      //   console.log('Success!');
+      // }
+    })
   },
 
   /**
@@ -64,7 +111,18 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-
+    // wx.request({
+    //   url: url1,
+    //   method: 'POST',
+    //   data: {
+    //     pkg: {
+    //       user_id: app.globalData.userID,
+    //       word_num: app.globalData.me.setting.wordsTodo,
+    //       review_num: app.globalData.me.setting.wordsOld,
+    //       mode: 0,
+    //     }
+    //   }
+    // })
   },
 
   /**

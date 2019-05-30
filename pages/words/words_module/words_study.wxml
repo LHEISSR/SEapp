@@ -12,13 +12,13 @@
   <view class="word_page"> 
     <view wx:if="{{word_pageStatus<=1}}" class="word_page0">
       <text>
-        {{word_list[word_now].word_Sentence}}
+        {{word_list[word_que[word_head % word_que.length]].word_Sentence}}
       </text>
     </view>
 
     <view wx:if="{{word_pageStatus==1}}" class="word_page1"> 
       <text>
-        {{word_list[word_now].word_SimilarSentence}}
+        {{word_list[word_que[word_head % word_que.length]].word_SimilarSentence}}
       </text>
     </view>
     

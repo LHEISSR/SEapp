@@ -44,6 +44,21 @@ App({
                 that.globalData.userID = response.data.userid;
               }
             })
+
+            // // 获取学习设置
+            // wx.request({
+            //   url: 'http://zhiduoshao.xyz:8888/api/login',  // 待定
+            //   method: "GET",
+            //   data: {
+            //     code: res.code
+            //   },
+            //   success(response) {
+            //     resolve(response.data)
+            //     that.globalData.me = response.data.me
+            //   }
+            // })
+
+            
             // console.log(res.code)
           } else {
             // console.log('登录失败！' + res.errMsg)
@@ -56,16 +71,13 @@ App({
   globalData: {
     userInfo: null,
     userID: 0,
-    word_book: 234,
 
     /*
     这些东西需要
     */
+    studyTime: 0, // 当日学习时长
     me: {
       setting: {
-        // index: 3,
-        // indexOld: 2,
-        // picker: ['5', '10', '15', '20', '25', '30', '35', '40', '45', '50'],
         wordsOld: 15,
         wordsTodo: 20,
       }

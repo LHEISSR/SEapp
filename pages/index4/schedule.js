@@ -14,30 +14,24 @@ Page({
    * 页面的初始数据
    */
   data: {
-    section: [
-      {
-        name: "七年级上册",
-        progress: 70,
-      },
-      {
-        name: "七年级下册",
-        progress: 30,
-      },
-      {
-        name: "八年级上册",
-        progress: 50
-      }
-    ],
-    // 这里记录了每天学习的词汇数量
-    numbers: [
-      5, 
-      4, 
-      6,
-      2,
-      5, 
-      6,
-      7,
-    ],
+    // 看来做每本书的学习进度是没有办法了
+    // section: [
+    //   {
+    //     name: "七年级上册",
+    //     progress: 70,
+    //   },
+    //   {
+    //     name: "七年级下册",
+    //     progress: 30,
+    //   },
+    //   {
+    //     name: "八年级上册",
+    //     progress: 50
+    //   }
+    // ],
+
+    // 这里记录了每天学习的词汇数量，这里我还是改成学习时间好了
+    numbers: [],
     canvasWidth: 320,
     canvasHeight: 200,
   },
@@ -65,37 +59,48 @@ Page({
     }
   },
 
-  /**
-  updateData: function () {
-    var simulationData = this.createSimulationData();
-    var series = [{
-      name: '成交量1',
-      data: simulationData.data,
-      format: function (val, name) {
-        return val.toFixed(2) + '万';
-      }
-    }];
-    lineChart.updateData({
-      categories: simulationData.categories,
-      series: series
-    });
-  },
-  */
-
+  // 返回过去 N (numdays) 天的学习时间，从服务器获取数据
   getData: function() {
-    var categories = util4.last_days(numdays);
-    // 怎样从后端获取数据是一个很大的问题
-    var data = [4, 5, 7, 1, 2, 5, 7];
-    return {
-      categories: categories,
-      data: data
-    }
+    var that = this;
+
+    var nums;
+    // 在 url 里填写 userID，get 可以用这种方式来获取特定用户的信息
+    wx.request({
+      url: `http://zhiduoshao.xyz:8888/api/schedule?user_id=${app.globalData.userID}`,
+      method: 'GET',
+      success(res) {
+        var zeros = new Array(numdays).fill(0);
+        var raw = res.data.numbers;
+        nums = zeros.concat(raw);
+        var len = nums.length;
+        nums = nums.slice(len - numdays, len);
+        console.log(nums);
+        that.setData({
+          numbers: nums,
+        });
+        // console.log(res);
+        var categories = util4.last_days(numdays).reverse();
+        return {
+          categories: categories,
+          data: nums,
+        }
+      },
+      fail(res) {
+        return {
+          categories: -1,
+          data: -1,
+        }
+      }
+    })
+
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
+  // 把代码写成这个样子我能怎么办，我也很无奈啊
   onLoad: function (options) {
+    var that = this;
 
     // Control the canvas size (Coz canvas can only be manipulated correctly by `px`)
     let cvsWidth = 0;
@@ -112,47 +117,79 @@ Page({
       // 
     }
 
-    this.setData({
+    that.setData({
       canvasWidth: cvsWidth,
       canvasHeight: cvsHeight,
     })
 
-    var data = this.getData();
-    lineChart =  new wxCharts({
-      canvasId: 'lineCanvas',
-      type: 'line',
-
-      categories: data.categories,
-      series: [{
-        name: ' ',
-        // 这里传数据的方式无解啊
-        data: data.data,
-        format: function (val) {
-          return val.toFixed(2);
+    // var data = that.getData();
+    var nums;
+    var data;
+    wx.request({
+      url: `http://zhiduoshao.xyz:8888/api/schedule?user_id=${app.globalData.userID}`,
+      method: 'GET',
+      success(res) {
+        var zeros = new Array(numdays).fill(0);
+        var raw = res.data.numbers;
+        nums = zeros.concat(raw);
+        var len = nums.length;
+        nums = nums.slice(len - numdays, len);
+        console.log(nums);
+        that.setData({
+          numbers: nums,
+        });
+        // console.log(res);
+        var categories = util4.last_days(numdays).reverse();
+        // return {
+        //   categories: categories,
+        //   data: nums,
+        // }
+        data = {
+          'categories': categories,
+          'data': nums,
         }
-      },
-      ],
-      xAxis: {
-        disableGrid: true
-      },
-      yAxis: {
-        title: '学习量',
-        format: function (val) {
-          return val.toFixed(0);
-        },
-        min: 0
-      },
-      width: cvsWidth,
-      height: cvsHeight,
-      extra: {
-        lineStyle: 'curve'
-      },
-      // Set the background color
-      background: '#e8e8e8',
-    });
+        console.log(data);
+        lineChart = new wxCharts({
+          canvasId: 'lineCanvas',
+          type: 'line',
 
+          categories: data.categories,
+          series: [{
+            name: '过去一周的学习时长',
+            // 这里传数据的方式无解啊
+            data: data.data,
+            format: function (val) {
+              return val.toFixed(1);
+            }
+          },
+          ],
+          xAxis: {
+            disableGrid: true
+          },
+          yAxis: {
+            title: '（分钟）',
+            format: function (val) {
+              return val.toFixed(0);
+            },
+            min: 0
+          },
+          width: cvsWidth,
+          height: cvsHeight,
+          extra: {
+            lineStyle: 'curve'
+          },
+          // Set the background color
+          background: '#F1F1F1',
+        });
+      },
+      fail(res) {
+        return {
+          categories: -1,
+          data: -1,
+        }
+      }
+    })
 
-    let that = this;
     setTimeout(function () {
       that.setData({
         loading: true
