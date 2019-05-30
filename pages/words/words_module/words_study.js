@@ -1,19 +1,21 @@
 var word_ListStatic = [
-  {
-    "word_Sentence": "床前明月(光)",
+  { 
+    "word_word": "光",
+    "word_Sentence": "床前明月光",
     "word_PartOfSpeech": "名词",
     "word_Sense": "月光",
-    "word_SimilarSentence": "山有小口，仿佛若有光 --《桃花源记》",
     "word_RemberedTimes": 0,
-    "word_TodayStatus": false,
+    "word_RemberedTimesChange": 0,
+    "word_Show": false
   },
   {
-    "word_Sentence": "武陵人捕鱼(为业)",
+    "word_word": "为",
+    "word_Sentence": "武陵人捕鱼为业",
     "word_PartOfSpeech": "动词",
     "word_Sense": "把……作为职业，以……为生。为，作为。",
-    "word_SimilarSentence": "昔鄱阳郡安乐县有人姓彭，世以捕射为业。--《列异传》",
     "word_RemberedTimes": 0,
-    "word_TodayStatus": false,
+    "word_RemberedTimesChange": 0,
+    "word_Show": false
   }
 ]
 
@@ -21,7 +23,7 @@ var util = require('../../../utils/util.js');
 var app = getApp();
 let touchDotX = 0; //X按下时坐标
 let touchDotY = 0; //y按下时坐标
-let card_color = new Array("#d9c9ba", "#dfd2c5", "#e6dbd1", "#ece4dc", "#f2ede8", "#f2ede8", "#ffffff") 
+let card_color = new Array("#e6dbd1", "#ece4dc", "#f2ede8", "#f2ede8", "#ffffff") 
 
 Page({
 
@@ -31,6 +33,7 @@ Page({
   data: {
     word_todayRemembered: 0, // number 当日已经背诵的几个单词 
     word_list: null,  // 单词表
+    word: new Array(),
     word_head: null,    // 背诵队列头
     word_tail: null,    // 背诵队列尾
     word_que: new Array(), 
@@ -39,7 +42,8 @@ Page({
     card_color1: card_color[0],
     card_color2: card_color[1],
     card_color3: card_color[2],
-    card3_show: true
+    card3_show: true,
+    MainorBack: true
   },
 
 
@@ -241,7 +245,36 @@ Page({
       })
     }, 600)
   },
+  rotateFn:function() {
 
+    this.animation_main = wx.createAnimation({
+      duration: 400,
+      timingFunction: 'linear'
+    })
+    this.animation_back = wx.createAnimation({
+      duration: 400,
+      timingFunction: 'linear'
+    })
+    // 点击正面
+
+    if (this.data.MainorBack) {
+      this.animation_main.rotateY(180).step()
+      this.animation_back.rotateY(0).step()
+      this.setData({
+        animationData: this.animation_main.export(),
+        MainorBack: false
+      })
+    }
+    // 点击背面
+    else {
+      this.animation_main.rotateY(0).step()
+      this.animation_back.rotateY(-180).step()
+      this.setData({
+        animationData: this.animation_main.export(),
+        MainorBack: true
+      })
+    }
+  },
   //相关操作函数
 
 
@@ -267,7 +300,8 @@ Page({
     this.setData({
         word_list: list,
         word_head: head,
-        word_todayRemembered: todayRemembered       
+        word_todayRemembered: todayRemembered,
+        MainorBack: true
       })
     console.log(this.data)
   },
@@ -283,13 +317,13 @@ Page({
     list[que[head % que.length]].word_RemberedTimesChange = -1
     que[(++tail) % que.length] = que[(head++)%que.length]  
     
-    
     this.Animation(translateXX, translateYY)
     this.setData({
       word_list: list,
       word_head: head,
       word_tail: tail,
-      word_que: que
+      word_que: que,
+      MainorBack: true
     })
     
     console.log(this.data)

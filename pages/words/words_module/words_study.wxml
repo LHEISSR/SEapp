@@ -2,16 +2,46 @@
 
   <view class="body-swiper1" bindtouchstart="touchstart" bindtouchend="touchend" style="z-index:{{index1}};top:{{ballTop1}}rpx;  margin-left:{{ballLeft1}}rpx;width:{{ballWidth1}}rpx;" animation="{{animationData}}">
     <!-- 正面 -->
-    <block wx:if="{{true}}">
+    <block wx:if="{{MainorBack}}">
       <view class="body-container" style="background-color:{{card_color1}}">
-        <text style="text-align:center">卡片1正面</text>
-        <text> {{word_list[word_que[word_head % word_que.length]].word_Sentence}} </text>
+        
+        <view class="body-container-main1">
+          <wux-button class="reverse-btn" clear bind:click="rotateFn">
+            <wux-icon type="md-sync" color="#909090"/>
+          </wux-button>
+          <!--button class="reverse-btn" role="button" bindtap="rotateFn" >
+            <wux-icon type="md-sync" color="#909090"/>
+          </button-->
+        </view>
+        
+        <view class="body-container-main2">
+          <!--<text> {{word_list[word_que[word_head % word_que.length]].word_Sentence}} </text>-->
+          <text class="word_main">光\n</text>
+
+          <text class="word_context">语境：床前明月光</text>
+        </view>
+        
+        <view class="body-container-main3">
+          <button class="body-container-main3-btn" role="button" bindtap="rotateFn" >
+            <text class="body-container-main3-btn-text">点击此处查看具体释义</text>
+          </button>
+        </view>
       </view>
     </block>
     <!-- 反面 -->
     <block wx:else>
-      <view class="body-container">
-        <text style="text-align:center">卡片1反面</text>
+      <view class="body-container" style="transform: rotateY(-180deg)">
+
+        <view class='body-container-back1'>
+          <wux-button class="reverse-btn" clear bind:click="rotateFn">
+            <wux-icon type="md-sync" color="#909090"/>
+          </wux-button>
+        </view>
+
+        <view class='body-container-back2'>
+        
+        </view>
+        
       </view>
     </block>
   </view>

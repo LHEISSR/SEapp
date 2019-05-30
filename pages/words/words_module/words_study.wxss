@@ -46,11 +46,79 @@ Page{
 .body-container {
   width: 100%;
   height: 100%;
-  display: flex;
-  flex-direction: column;
   background-color: #fff;
   border-radius: 12px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
+
+.reverse-btn {
+  width: 120rpx;
+  height: 120rpx;
+
+  display:flex;
+  align-items: center;
+  align-content: center;
+
+}
+
+.body-container-main1{
+  flex-grow: 1;
+  width: 100%;
+
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-start;
+}
+
+
+.body-container-main2{
+  flex-grow: 8;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.word_main{
+  font-size: 90rpx;
+}
+
+.word_context{
+  font-size: 28rpx;
+}
+.body-container-main3{
+  flex-grow: 1;
+}
+.body-container-main3-btn{
+  background-color: transparent;
+  border: none;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+.body-container-main3-btn::after{
+  border: none;
+}
+.body-container-main3-btn-text{
+  font-size: 20rpx;
+}
+
+
+.body-container-back1{
+  flex-grow: 1;
+  width: 100%;
+
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-start;
+}
+
+
+
+
 .btn1{
   position: fixed;
   width: 40%;
