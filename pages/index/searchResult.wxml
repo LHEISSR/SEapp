@@ -1,16 +1,22 @@
 <!--pages/index/searchResult.wxml-->
 <view class='content' wx:if="{{valid}}">
-  <view class='word-intro'>
-    <image class='matts' src='../../image/matts.png' mode='scaleToFill'></image>
-    <view class='word'>{{word}}</view>
-    <view class='pronunciation'>
-      <text style='font-weight:bold;'>读音</text>
-      <view class="pronList">
-        <text wx:key wx:for="{{pronList}}">
-          {{item}}
-        </text>
+  <view class="top">
+    <view class='word-intro'>
+      <image class='matts' src='../../image/matts.png' mode='scaleToFill'></image>
+      <view class='word'>{{word}}</view>
+      <view class='pronunciation'>
+        <text style='font-weight:bold;'>读音</text>
+        <view class="pronList">
+          <text wx:key wx:for="{{pronList}}">
+            {{item}}
+          </text>
+        </view>
       </view>
     </view>
+    <view>
+        <text class="favor {{isLike?'icon-favorfill':'icon-favor'}}" bindtap="clickFavor"></text>
+        <text class="share icon-upload" bindtap="clickFavor"></text>
+      </view>
   </view>
   <view class='word-explaination' wx:key wx:for="{{explaination}}" wx:for-item="item">
     <view class='one-explaination'>

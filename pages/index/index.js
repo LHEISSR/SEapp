@@ -4,38 +4,30 @@ Page({
   data: {
     swiperList:[],
     fontFamily: 'chi-font',
-    loaded: false,
+    isLoaded: false,
     cardCur: 0,
   },
   onLoad() {
-
     this.towerSwiper('swiperList');
-    try {
-      wx.clearStorageSync()
-      // console.log("clear Storage");
-    } catch (e) {
-      // Do something when catch error
-    }
-
-
     //读取储存更新
     //向后端请求数据
-    var that = this;
-    wx.getStorage({
-      key: 'swiperList',
-      success(res) {    //如果在储存中
-        // console.log("in storage");
-        wx.getStorage({
-          key: 'swiperList',
-          success(res) {
-            that.setData({
-              swiperList: res.data,
-            })
-          }
-        })
-      },
-      fail(res) {      //如果没有在储存中
+    // var that = this;
+    // wx.getStorage({
+    //   key: 'swiperList',
+    //   success(res) {    //如果在储存中
+    //     // console.log("in storage");
+    //     wx.getStorage({
+    //       key: 'swiperList',
+    //       success(res) {
+    //         that.setData({
+    //           swiperList: res.data,
+    //         })
+    //       }
+    //     })
+    //   },
+    //   fail(res) {      //如果没有在储存中
         // console.log("not in storage");
+        var that = this;
         let userID = app.globalData.userID;
         if(userID == 0){
           //如果未登录
@@ -47,10 +39,10 @@ Page({
           //如果登陆了
           that._getSwiperlist();
         }
-      }
-    })
+      // }
+    // })
   },
-
+  //获取推送信息
   _getSwiperlist(){
     var that = this;
     wx.request({
@@ -60,15 +52,22 @@ Page({
         console.log(res.data)
         that.setData({
           swiperList: res.data.swiper_List,
+          isLoaded: true,
         })
+        //抽取被收藏的页面并保存为likeList
+        let likeList = [];
+        for(let swiper of that.data.swiperList){
+          if(swiper.like) likeList.push(swiper.push_id)
+        }
         wx.setStorage({
-          key: 'swiperList',
-          data: res.data.swiper_List,
+          // key: 'swiperList',
+          // data: res.data.swiper_List,
+          key: "likeList",
+          data: likeList,
         })
       }
     })
   },
-
 
   DotStyle(e) {
     this.setData({
@@ -105,6 +104,7 @@ Page({
       direction: e.touches[0].pageX - this.data.towerStart > 0 ? 'right' : 'left'
     })
   },
+
   onShow: function () {
     if (typeof this.getTabBar === 'function' &&
       this.getTabBar()) {
@@ -149,41 +149,55 @@ Page({
     var swiperList = this.data.swiperList;
     var cardCur = this.data.cardCur;
     var isLike = swiperList[cardCur].like?0:1;
-    // console.log(isLike)
     let pushID = swiperList[cardCur].push_id;
-    // console.log(pushID);
     var that = this;
     wx.request({
       url: `http://zhiduoshao.xyz:8888/api/pushlike_yiju?userID=${app.globalData.userID}&pushID=${pushID}&like=${isLike}`,
       method: "GET",
       success(res) {
-        // console.log(res.data)
         var newlike_count = res.data;
         swiperList[cardCur].like = isLike;
         swiperList[cardCur].like_count = newlike_count;
-        // console.log(swiperList)
         that.setData({
           swiperList: swiperList,
         })
         //更新本地缓存
-        wx.setStorage({
-          key: 'swiperList',
-          data: swiperList,
-        })
+       that._toggleFavor(pushID, isLike)
+      }
+    })
+  },
 
-        wx.showToast({
-          title: isLike ? "已收藏" : "已取消",
-          icon: 'success',
-          duration: 500
+  _toggleFavor(pushID, isLike){
+    wx.getStorage({
+      key: 'likeList',
+      success(res) {
+        let likeList = res.data;
+        if(isLike){
+          likeList.push(pushID);
+        }else{
+          let idx = likeList.indexOf(pushID);
+          likeList.splice(idx, 1);
+        }
+        console.log("likeList: ",likeList)
+        wx.setStorage({
+          key: 'likeList',
+          data: likeList,
         })
       }
     })
-    
-
+    wx.showToast({
+      title: isLike ? "已收藏" : "已取消",
+      icon: 'success',
+      duration: 500
+    })
   },
+
   clickRead(e){
+    let cardCur = this.data.cardCur;
+    let swiperList = this.data.swiperList;
+    let pushID = swiperList[cardCur].push_id
     wx.navigateTo({
-      url: './article?cardCur='+this.data.cardCur,
+      url:  `./article?pushID=${pushID}`,
     })
     // wx.navigateTo({
     //   url: './searchResult?word=' + "奇"

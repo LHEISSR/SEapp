@@ -5,10 +5,12 @@ Page({
    * 页面的初始数据
    */
   data: {
-    articleInfo: {},
-    fontFamily: 'chi-font',
-    loaded: false,
-    cardCur: 0,
+    // articleInfo: {},
+    // fontFamily: 'chi-font',
+    // loaded: false,
+    // cardCur: 0,
+    articleInfo:{},
+    pushID:null,
   },
 
   /**
@@ -16,19 +18,32 @@ Page({
    */
   onLoad: function (options) {
     //调取数据
-    var cardCur = options.cardCur;
-    console.log("cardCur:"+cardCur);
-    this.setData({
-      cardCur: cardCur,
-    })
+    // var cardCur = options.cardCur;
+    // console.log("cardCur:"+cardCur);
+    // this.setData({
+    //   cardCur: cardCur,
+    // })
+    // var that = this;
+    // wx.getStorage({
+    //   key: 'swiperList',
+    //   success(res) {
+    //     var articleInfo = res.data[cardCur]
+    //     that.setData({
+    //       articleInfo: articleInfo,
+    //     }) 
+    //   }
+    // })
+    let pushID = options.pushID;
+    pushID = 2;
     var that = this;
-    wx.getStorage({
-      key: 'swiperList',
-      success(res) {
-        var articleInfo = res.data[cardCur]
+    wx.request({
+      url: `http://zhiduoshao.xyz:8888/api/getpush?pushID=${pushID}`,
+      method: "GET",
+      success(res){
         that.setData({
-          articleInfo: articleInfo,
-        }) 
+          pushID: pushID,
+          articleInfo:  res.data,
+        })    
       }
     })
   },
@@ -85,33 +100,4 @@ Page({
   /*
   * 自定义函数
   */
-  clickFavor(e){
-    var articleInfo = this.data.articleInfo;
-    var cardCur = this.data.cardCur;
-    var isLike = !articleInfo.like
-    articleInfo.like = isLike;
-    this.setData({
-      articleInfo:articleInfo,
-    })
-    //更新本地缓存
-    wx.getStorage({
-      key: 'swiperList',
-      success(res) {
-        var swiperList = res.data;
-        console.log(cardCur);
-        console.log(articleInfo);
-        swiperList[cardCur] = articleInfo;
-        console.log(swiperList);
-        wx.setStorage({
-          key: 'swiperList',
-          data: swiperList,
-        })
-      }
-    })
-    wx.showToast({
-      title: isLike ? "已收藏" : "已取消",
-      icon: 'success',
-      duration: 500
-    })
-  },
 })

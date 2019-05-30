@@ -24,6 +24,20 @@
   font-size: 30rpx;
 }
 
+.top{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-right:100rpx;
+}
+
+.top .favor,
+.top .share{
+  color:#D9C9BA;
+  font-size:50rpx;
+  margin-left:30rpx;
+}
+
 /* ========== */
 /* word-intro */
 /* ========== */
