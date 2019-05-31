@@ -19,10 +19,10 @@
    
   <block wx:if="{{TabCur==0}}">
     <block wx:for="{{favors.yiju}}">
-      <navigator open-type="navigate" hover-class='navigator-hover' url="/pages/index/article?cardCur=0">
+      <navigator open-type="navigate" hover-class='navigator-hover' url="/pages/index/article?pushID={{item.id}}">
         <view class="cu-bar bg-white solid-bottom margin-top">
           <view class="action">
-            <text class="cuIcon-title left">{{item.title}}</text>
+            <text class="cuIcon-title left text-black text-bold">{{item.name}}</text>
             <text text-align='right'>【{{item.dynasty}}】{{item.author}}</text>
           </view>
         </view>
@@ -40,7 +40,7 @@
       <navigator open-type="navigate" hover-class='navigator-hover' url=".">
         <view class="cu-bar bg-white solid-bottom margin-top">
           <view class="action">
-            <text class="cuIcon-title left">{{item.name}} \n</text>
+            <text class="cuIcon-title left text-black text-bold"> {{item.name}} \n</text>
             <view class="swiper-item-preview">（《{{item.from_which}}》）</view>
           </view>
         </view>
@@ -58,7 +58,7 @@
     <view class="margin-top">
     </view>
     <block wx:for="{{favors.vocab}}">
-      <navigator open-type="navigate" hover-class='navigator-hover' url=".">
+      <navigator open-type="navigate" hover-class='navigator-hover' url="/pages/index/searchResult?word={{item.name}}">
         <view class="cu-bar bg-white solid-bottom">
           <view class="action">
             <text class="cuIcon-title left">{{item.name}} \n</text>

@@ -34,7 +34,7 @@ Page({
     //   }
     // })
     let pushID = options.pushID;
-    pushID = 2;
+    // pushID = 2;
     var that = this;
     wx.request({
       url: `http://zhiduoshao.xyz:8888/api/getpush?pushID=${pushID}`,
