@@ -16,9 +16,9 @@
         
         <view class="body-container-main2">
           <!--<text> {{word_list[word_que[word_head % word_que.length]].word_Sentence}} </text>-->
-          <text class="word_main">光\n</text>
+          <text class="word_main">{{word_list[word_que[word_head % word_que.length]].word_word}}\n</text>
 
-          <text class="word_context">语境：床前明月光</text>
+          <text class="word_context">语境:{{word_list[word_que[word_head % word_que.length]].word_Sentence}}</text>
         </view>
         
         <view class="body-container-main3">
