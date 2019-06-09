@@ -34,11 +34,11 @@ Page({
       success: function (res) {
         console.log("res")
         console.log(res)
-
+        /*后端写反了 learning 和 unlearn*/
         that.setData({
-          word_learning: res.data.data.word_learning,
+          word_learning: res.data.data.word_unlearn,
           word_learned: res.data.data.word_learned,
-          word_unlearn: res.data.data.word_unlearn
+          word_unlearn: res.data.data.word_learning
         })
       },
       complete: function () {

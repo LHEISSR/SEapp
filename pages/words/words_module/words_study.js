@@ -334,13 +334,13 @@ Page({
         }
       }) 
 
-      wx.navigateTo({
+      /*wx.navigateTo({
         url: './words_finish',  
       })
-      /*
+      */
       wx.redirectTo({
         url: './words_finish',
-      })*/
+      })
     }
     this.setData({
         word_list: list,
