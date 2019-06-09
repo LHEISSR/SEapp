@@ -1,1 +1,17 @@
 /* pages/words/words_module/words_finish.wxss */
+Page{
+  background-color: #D9C9BA;
+  height: 100%;
+}
+
+.page{
+
+
+}
+
+.finish_text{
+  position: fixed;
+  top: 40%;
+  left: 30%;
+  font-size: 60rpx;
+}

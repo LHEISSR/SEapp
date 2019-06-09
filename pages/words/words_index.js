@@ -9,9 +9,9 @@ Page({
     precent: 0,
     winWidth: 0,
     winHeigth: 0,
-    word_learing: 123,
-    word_learned: 200,
-    word_unlearn: 200,
+    word_learning: 0,
+    word_learned: 0,
+    word_unlearn: 0,
   },
 
 
@@ -20,19 +20,37 @@ Page({
    */
   onLoad: function (options) {
     var that = this;
-    var data = this.data;
+   
     /*
       请求背词状态也信息
     */
 
+    wx.request({
+      url: 'http://zhiduoshao.xyz:8888/api/jindu',//请求地址
+      data: {//发送给后台的数据
+        userID: app.globalData.userID
+      },
+      method: "POST",//get为默认方法/POST
+      success: function (res) {
+        console.log("res")
+        console.log(res)
 
-    var precent = data.word_learned / (data.word_learing + data.word_learned + data.word_unlearn) * 100
-    precent = Math.round(precent)
-    
-    that.setData({
-      precent: precent
+        that.setData({
+          word_learning: res.data.data.word_learning,
+          word_learned: res.data.data.word_learned,
+          word_unlearn: res.data.data.word_unlearn
+        })
+      },
+      complete: function () {
+        let data = that.data;
+        let precent = data.word_learned / (data.word_learning + data.word_learned + data.word_unlearn) * 100
+        that.setData({
+          precent: precent
+        })
+      }
     })
 
+  
     wx.getSystemInfo({
       success: function (res) {
         that.setData({

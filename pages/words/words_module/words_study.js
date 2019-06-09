@@ -99,6 +99,13 @@ Page({
         if (that.data.word_list[i].word_Show == false || (that.data.word_list[i].word_Show == true && that.data.word_list[i].word_RemberedTimesChange == -1)){
           que[++tail] = i;  
         }
+
+        if (tail == -1)
+        {
+          wx.redirectTo({
+            url: './words_finish',
+          })
+        }
         for (var i = 0, j, c; i <= tail; ++i)
         {
           j = Math.floor(Math.random()*(i+1))
@@ -116,6 +123,7 @@ Page({
         console.log(that.data)
       }//请求完成后执行的函数
     })
+    
     console.log("onload finish")
     console.log(this.data)
     console.log(app.globalData)
