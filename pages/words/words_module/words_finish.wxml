@@ -1,2 +1,4 @@
 <!--pages/words/words_module/words_finish.wxml-->
-<text>pages/words/words_module/words_finish.wxml</text>
+<view class="page">
+  <text class='finish_text'>今日已完成</text>
+</view>

@@ -31,6 +31,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    date: null,
     word_todayRemembered: 0, // number 当日已经背诵的几个单词 
     word_list: null,  // 单词表
     word: new Array(),
@@ -43,7 +44,8 @@ Page({
     card_color2: card_color[1],
     card_color3: card_color[2],
     card3_show: true,
-    MainorBack: true
+    MainorBack: true,
+    res_data: null
   },
 
 
@@ -63,24 +65,27 @@ Page({
     
     var date = new Date()
     var startTime = date.getHours() * 3600 + date.getMinutes() * 60 + date.getSeconds()
-    console.log(startTime)
+
 
     this.setData({
       word_startTime: startTime
     })
-
     wx.request({
-      url: 'http://zhiduoshao.xyz:8888/api/getwords/',//请求地址
+      url: 'http://zhiduoshao.xyz:8888/api/getwords',//请求地址
       data: {//发送给后台的数据
-        userID: 2
+        userID: app.globalData.userID
       },
       method: "POST",//get为默认方法/POST
       success: function (res) {
+        console.log("res")
+        console.log(res)
+
         that.setData({
+          res_data: res.data,
+          date: res.data.data.date,
           word_list: res.data.data.word_List,
           word_head: 0
         })
-
       },
       fail: function (err) {
         console.log(err)
@@ -89,9 +94,17 @@ Page({
 
         var que = new Array()
         var tail = -1
+
         for (var i = 0; i < that.data.word_list.length; i++)
         if (that.data.word_list[i].word_Show == false || (that.data.word_list[i].word_Show == true && that.data.word_list[i].word_RemberedTimesChange == -1)){
           que[++tail] = i;  
+        }
+
+        if (tail == -1)
+        {
+          wx.redirectTo({
+            url: './words_finish',
+          })
         }
         for (var i = 0, j, c; i <= tail; ++i)
         {
@@ -106,9 +119,14 @@ Page({
           word_tail: tail,
           word_que: que
         })
+        console.log("request complete")
+        console.log(that.data)
       }//请求完成后执行的函数
     })
+    
+    console.log("onload finish")
     console.log(this.data)
+    console.log(app.globalData)
   },
 
   /**
@@ -135,13 +153,16 @@ Page({
     var studytime = (endTime - this.data.word_startTime + 24 * 3600 ) % (24 * 3600) + app.globalData.studyTime
     getApp().globalData.studyTime = studytime
 
-    console.log(getApp().globalData)
+    console.log("before wx.request save")
+    console.log(this.data.word_list)
+    let send_data = this.data.res_data;
+    send_data.word_List = this.data.word_list
     wx.request({
-      url: 'http://zhiduoshao.xyz:8888/api/save/',
+      url: 'http://zhiduoshao.xyz:8888/api/save',
       data:
       {
-        userID: 2,
-        data: this.data.word_list
+        userID: app.globalData.userID,
+        save: send_data
       },
       method: "POST",
       fail: function (err) {
@@ -291,11 +312,35 @@ Page({
     
 
     this.Animation(translateXX, translateYY)
+    let send_data = this.data.res_data;
+    send_data.word_List = this.data.word_list
     if (head >tail)
     {
+      wx.request({
+        url: 'http://zhiduoshao.xyz:8888/api/finish',
+        data:
+        {
+          userID: app.globalData.userID,
+          data: send_data
+        },
+        method: "POST",
+        fail: function (err) {
+          console.log("finish -- error")
+          console.log(err)
+        },
+        success: function (ress) {
+          console.log("finish -- success")
+          console.log(ress.data)
+        }
+      }) 
+
+      wx.navigateTo({
+        url: './words_finish',  
+      })
+      /*
       wx.redirectTo({
         url: './words_finish',
-      })
+      })*/
     }
     this.setData({
         word_list: list,
